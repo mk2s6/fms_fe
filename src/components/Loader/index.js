@@ -1,6 +1,6 @@
 import Backdrop from '@mui/material/Backdrop';
-import { CircularProgress } from '@mui/material';
 import { LoaderContextConsumer } from '../../context/LoaderContext';
+import { TimeCapsule } from '../System/LoadingComponent';
 
 export default function Loader() {
   return (
@@ -13,7 +13,7 @@ export default function Loader() {
         return (
           <div>
             <Backdrop sx={{ color: '#000', zIndex: theme => 1600, backgroundColor: 'rgba(50,50,50,0.9)' }} open={loader} onClick={handleClose}>
-              <CircularProgress color='inherit' />
+              <TimeCapsule />
             </Backdrop>
           </div>
         );

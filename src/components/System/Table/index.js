@@ -1,12 +1,12 @@
-import { Paper } from '@mui/material';
+import { Container, Paper } from '@mui/material';
 import DataTable from './DataTable';
 
 function Table(props) {
   return (
     <>
-      <Paper elevation={8} sx={{ width: '100%' }}>
+      <Container maxWidth='lg' sx={{ width: '80%' }}>
         <DataTable {...props} />
-      </Paper>
+      </Container>
     </>
   );
 }

@@ -14,8 +14,8 @@ export default function DataTable({ tableColumns, API, dataTotalRows, dataProper
   const getDataRows = async (page_no, limit) => {
     try {
       const { data } = await APIRequest(API, { page_no, limit });
-      setRows(data[0][dataProperty]);
-      setTotalRows(data[0][dataTotalRows]);
+      setRows(data[dataProperty]);
+      setTotalRows(data[dataTotalRows]);
     } catch (e) {
       console.log(e);
     }

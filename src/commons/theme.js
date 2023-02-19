@@ -267,4 +267,83 @@ export const themeOptions = [
     },
     spacing: 8,
   },
+
+  {
+    mode: 'Light',
+    name: 'GRASS-2',
+    id: 'THEME-GRASS-2',
+    palette: {
+      type: 'light',
+      primary: {
+        main: '#072100',
+        light: '#072100',
+        dark: '#131f0d',
+        contrastText: '#d8e7cb',
+      },
+      secondary: {
+        main: '#d8e7cb',
+        dark: '#edfadf',
+        contrastText: '#131f0d',
+        light: '#edfadf',
+      },
+
+      text: {
+        primary: '#072100',
+        secondary: '#131f0d',
+        default: '#131f0d',
+        hint: '#5D6968',
+        disabled: '#6C9491',
+      },
+      background: {
+        default: '#AAC7B3',
+        paper: '#d8e7cb',
+      },
+      divider: '#072100',
+    },
+    props: {
+      MuiAppBar: {
+        color: 'secondary',
+      },
+    },
+    components: {
+      MuiAvatar: {
+        styleOverrides: {
+          root: {
+            fontSize: '1rem',
+            backgroundColor: '#edfadf',
+            color: '#121212',
+          },
+        },
+      },
+      MuiPaper: {
+        variants: [
+          {
+            props: { variant: 'lock-screen' },
+            style: {
+              backgroundColor: '#161616',
+            },
+          },
+        ],
+        styleOverrides: {
+          root: {
+            fontSize: '1rem',
+          },
+        },
+      },
+      MuiAppBar: {
+        defaultProps: {
+          color: 'secondary',
+        },
+        styleOverrides: {
+          root: {
+            color: 'primary',
+          },
+        },
+      },
+    },
+    shape: {
+      borderRadius: 18,
+    },
+    spacing: 8,
+  },
 ];

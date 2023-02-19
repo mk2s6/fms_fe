@@ -41,7 +41,7 @@ function Main({ routes }) {
 
   useEffect(() => {
     console.log(loginStatus, location.pathname);
-    if (loginStatus && NoAuthAppBar.length && NoAuthAppBar.filter(N => N.route === location.pathname).length) navigate(_default[0].route);
+    if (loginStatus && NoAuthAppBar.length && NoAuthAppBar.filter(N => N.route === location.pathname).length) navigate('/home');
     if (loginStatus && location.pathname === '/signout') {
       unRegisterUser();
       navigate(NoAuthAppBar[0].route);

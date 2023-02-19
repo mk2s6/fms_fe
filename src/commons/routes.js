@@ -8,6 +8,7 @@ import LogoutTwoToneIcon from '@mui/icons-material/LogoutTwoTone';
 import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
 import RestaurantTwoToneIcon from '@mui/icons-material/RestaurantTwoTone';
 import Registration from '../pages/Registration';
+import Transactions from '../pages/Transactions';
 
 export const MODULES = [
   {
@@ -45,7 +46,7 @@ export const MODULES = [
   {
     id: 4,
     code: 'MODTRN',
-    component: <Restaurant />,
+    component: <Transactions />,
     noAuth: false,
     in_nav: true,
     in_home: true,
@@ -55,7 +56,7 @@ export const MODULES = [
   {
     id: 5,
     code: 'MODLED',
-    component: <Employees />,
+    component: <Transactions />,
     noAuth: false,
     in_nav: true,
     in_home: true,
