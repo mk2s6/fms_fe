@@ -32,6 +32,7 @@ export const USER_REGISTER = ({ name, email, mobile, password, username }) => ({
 });
 
 export const USER_PROFILE = _data => ({ url: `/users/my/profile`, method: 'get' });
+export const CHECK_USERNAME = ({ username }) => ({ url: `/users/username`, method: 'patch', body: { username } });
 export const USER_USERNAME_UPDATE = ({ username }) => ({ method: 'put', url: `/users/my/username`, body: { username } });
 export const USER_PIN_UPDATE = ({ pin }) => ({ method: 'post', url: `/users/my/pin`, body: { pin } });
 export const USER_PASSWORD_UPDATE = ({ password }) => ({ method: 'post', url: `/users/my/password`, body: { password } });
@@ -61,7 +62,7 @@ export const GET_TRANSACTIONS_LIST = ({ page_no, limit, ledger, parent_transacti
   }`,
   method: 'get',
 });
-export const GET_TRANSACTION_DETAILS = ({ id }) => ({ url: `/transaction/${id}`, method: 'get' });
+export const GET_TRANSACTION_DETAILS = ({ id }) => ({ url: `/transactions/${id}`, method: 'get' });
 
 // --------------------------------------------------------------------
 //

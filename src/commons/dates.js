@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 const dateFormat = 'YYYY-MM-DD';
-const displayDateFormat = 'MMM, Do YYYY';
+const displayDateFormat = 'llll';
 const dateTimeFormat = 'DD-MM-YYYY HH:mm:ss';
 
 export const formatDate = date => moment(date).format(dateFormat);

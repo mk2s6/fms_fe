@@ -1,10 +1,10 @@
 import { Avatar, Container, Grid, Paper, Typography } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
 import useAPICall from '../../hooks/useAPICall';
 import useInput from '../../hooks/useInput';
 import useValidations from '../../hooks/useValidations';
 import { Btn, TextBox } from '../../components/System/Inputs';
-import { validateString } from '../../utils/validations';
+import { checkErrors, validateString } from '../../utils/validations';
 import AppRegistrationTwoToneIcon from '@mui/icons-material/AppRegistrationTwoTone';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,8 +15,11 @@ function Registration() {
   const [email, bindEmail, emailValidation] = useInput('', null, 'Please provide a valid Password.', validateString(8));
   const [mobile, bindMobile, mobileValidation] = useInput('', null, 'Please provide a valid Password.', validateString(8));
   const { APIRequest } = useAPICall();
+  const { APIRequest: noNotificationAPI } = useAPICall(false, false);
   const { setValidations } = useValidations();
   const navigate = useNavigate();
+
+  const inputFields = [bindUsername, bindPassword, bindName, bindEmail, bindMobile];
 
   const validationFields = {
     username: usernameValidation,
@@ -26,10 +29,24 @@ function Registration() {
     mobile: mobileValidation,
   };
 
+  const validateUsernameAvailable = async () => {
+    try {
+      await noNotificationAPI('CHECK_USERNAME', { username }, false);
+      return true;
+    } catch (e) {
+      if (e.type === 0 && e.errors.length) {
+        setValidations(validationFields, e.errors);
+      }
+      return false;
+    }
+  };
+
   const submitRegistration = async () => {
     try {
-      await APIRequest('USER_REGISTER', { username, password, name, email, mobile });
-      navigate('/signin');
+      if (!(await checkErrors(inputFields)) && (await validateUsernameAvailable())) {
+        await APIRequest('USER_REGISTER', { username, password, name, email, mobile });
+        navigate('/signin');
+      }
     } catch (e) {
       if (e.type === 0 && e.errors.length) {
         setValidations(validationFields, e.errors);
