@@ -8,7 +8,7 @@ import axios from 'axios';
 const HOTEL_HEADER_KEY = process.env.REACT_APP_HEADER_KEY;
 const HOTEL_HEADER_VALUE = process.env.REACT_APP_HEADER_VALUE;
 
-const BASE_URL = process.env.REACT_APP_ENV === 'LOCAL' ? 'http://192.168.1.3:4200' : process.env.REACT_APP_API_URL || 'http://localhost:4200';
+const BASE_URL = process.env.REACT_APP_ENV === 'LOCAL' ? 'http://192.168.1.5:4200' : process.env.REACT_APP_API_URL || 'http://localhost:4200';
 
 const request = axios.create({ baseURL: BASE_URL, timeout: 3000 });
 
@@ -36,7 +36,7 @@ const useAPICall = (getNotification = false, loader = true) => {
 
       (getNotification || notification) && enqueueSnackbar(response.data.data.description, { variant: 'success' });
       setLoader(false);
-      return { data: response.data.data.items, token: response.headers['x-id-token'] };
+      return { data: response.data.data.items, ...(!token ? { token: response.headers['x-id-token'] } : {}) };
     } catch (e) {
       let err = e || {};
 

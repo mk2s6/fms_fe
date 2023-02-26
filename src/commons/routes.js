@@ -1,14 +1,13 @@
 import Home from '../pages/Home';
 import Profile from '../pages/EmployeeProfile';
-import Restaurant from '../pages/Restaurant';
 import Login from '../pages/Login';
-import Employees from '../pages/Employees';
 
 import LogoutTwoToneIcon from '@mui/icons-material/LogoutTwoTone';
 import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
 import RestaurantTwoToneIcon from '@mui/icons-material/RestaurantTwoTone';
 import Registration from '../pages/Registration';
 import Transactions from '../pages/Transactions';
+import PaymentMethods from '../pages/PaymentMethods';
 
 export const MODULES = [
   {
@@ -91,5 +90,23 @@ export const MODULES = [
     in_home: false,
     in_app_bar: true,
     menu_icon: <LogoutTwoToneIcon fontSize='small' />,
+  },
+  {
+    id: 8,
+    code: 'MODPYM',
+    component: <PaymentMethods />,
+    noAuth: false,
+    in_nav: true,
+    in_home: true,
+    in_app_bar: false,
+  },
+  {
+    id: 9,
+    code: 'MODLEN',
+    component: <Transactions />,
+    noAuth: false,
+    in_nav: true,
+    in_home: true,
+    in_app_bar: false,
   },
 ];

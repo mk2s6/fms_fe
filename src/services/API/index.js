@@ -85,3 +85,24 @@ export const GET_LENDINGS_LIST = ({ page_no, limit, ledger, parent_transaction, 
   method: 'get',
 });
 export const GET_LENDINGS_DETAILS = ({ id }) => ({ url: `/lendings/${id}`, method: 'get' });
+
+// --------------------------------------------------------------------
+//
+// Transactions related routes
+//
+// --------------------------------------------------------------------
+export const GET_PAYMENT_METHODS_LIST = ({ page_no = 1, limit = 10 }) => ({
+  url: `/payment-methods?page_no=${page_no}&limit=${limit}`,
+  method: 'get',
+});
+export const GET_PAYMENT_METHOD_DETAILS = ({ id }) => ({ url: `/payment-methods/${id}`, method: 'get' });
+export const ADD_PAYMENT_METHOD = ({ name, type, last4Digits }) => ({ url: `/payment-methods`, method: 'post', body: { name, type, last4Digits } });
+export const UPDATE_PAYMENT_METHOD = ({ name, type, last4Digits, id }) => ({
+  url: `/payment-methods/${id}`,
+  method: 'put',
+  body: { name, type, last4Digits },
+});
+export const DELETE_PAYMENT_METHOD = ({ id }) => ({
+  url: `/payment-methods/${id}`,
+  method: 'delete',
+});

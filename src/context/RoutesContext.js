@@ -16,9 +16,11 @@ export const RoutesContextProvider = props => {
   const [NoAuthAppBar, setNoAuthAppBarRoute] = useState([]);
 
   const refreshRoutes = () => {
-    const routes = MODULES.filter(M => modules.filter(module => M.code === module.code).length).map(M => {
-      return { ...M, ...modules.filter(module => M.code === module.code)[0] };
-    });
+    const routes = MODULES.filter(M => modules.filter(module => M.code === module.code).length)
+      .map(M => {
+        return { ...M, ...modules.filter(module => M.code === module.code)[0] };
+      })
+      .sort((a, b) => a.sort - b.sort);
     setAllRoutes(routes);
   };
 

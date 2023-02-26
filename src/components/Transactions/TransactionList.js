@@ -1,7 +1,9 @@
+import { AddCircleTwoTone, DownloadForOfflineTwoTone, UploadFileTwoTone } from '@mui/icons-material';
 import { Container, ListItem, MenuItem, Pagination, Paper, Select, Stack } from '@mui/material';
 import { Box } from '@mui/system';
 import { useEffect, useState } from 'react';
 import useAPICall from '../../hooks/useAPICall';
+import SpeedDialInput from '../System/SpeedDialInput';
 import TransactionListItem from './TransactionListItem';
 
 const rowsPerPageConfig = [1, 5, 10, 15, 20, 25, 50, 100];
@@ -12,6 +14,34 @@ export default function TransactionsList({ API, filters, currentPage, ...props }
   const [limit, setLimit] = useState(rowsPerPageConfig[1]);
   const [totalPages, setTotalPages] = useState(0);
   const { APIRequest } = useAPICall();
+
+  const toolTopActions = [
+    {
+      key: 'Add',
+      icon: <AddCircleTwoTone />,
+      toolTip: 'Add Transactions',
+      action: () => {
+        // setClickType('CREATE');
+      },
+    },
+    {
+      key: 'bulk-upload',
+      icon: <UploadFileTwoTone />,
+      toolTip: 'Bulk add transactions',
+      action: () => {
+        // setClickType('BULK_CREATE');
+        alert('This feature is coming soon..!!');
+      },
+    },
+    {
+      key: 'bulk-create-sample',
+      icon: <DownloadForOfflineTwoTone />,
+      toolTip: 'Bulk Create - sample',
+      action: () => {
+        alert('This feature is coming soon..!!');
+      },
+    },
+  ];
 
   const getDataRows = async (page_no, limit) => {
     try {
@@ -99,6 +129,7 @@ export default function TransactionsList({ API, filters, currentPage, ...props }
           </Stack>
         )}
       </Container>
+      <SpeedDialInput actions={toolTopActions} ariaLabel='Create Options - Add a Transaction' />
     </>
   );
 }

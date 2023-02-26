@@ -1,5 +1,4 @@
 import { Avatar, Container, Grid, Paper, Typography } from '@mui/material';
-import React, { useEffect } from 'react';
 import useAPICall from '../../hooks/useAPICall';
 import useInput from '../../hooks/useInput';
 import useValidations from '../../hooks/useValidations';
