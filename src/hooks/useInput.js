@@ -30,7 +30,7 @@ const useInput = (initialValue, type, validationMessage = '', validator = _v => 
     }
   };
 
-  const validate = e => {
+  const Validate = e => {
     if (!validator(value)) {
       setError(true);
       setHelperText(validationMessage);
@@ -42,11 +42,25 @@ const useInput = (initialValue, type, validationMessage = '', validator = _v => 
     setHelperText(e.message);
   };
 
-  const setDefaultValue = _val => {
+  const SetDefaultValue = _val => {
     setValue(_val);
   };
 
-  return [value, { value, onChange, validate, setDefaultValue, onBlur, error, ...(error ? { helperText } : {}) }, setValidationErrors, reset];
+  return [
+    value,
+    {
+      value,
+      onChange,
+      Validate,
+      SetDefaultValue,
+      onBlur,
+      error,
+      ...(error ? { HelperText: helperText } : {}),
+      ...(type === 2 ? { checked: value } : {}),
+    },
+    setValidationErrors,
+    reset,
+  ];
 };
 
 export default useInput;

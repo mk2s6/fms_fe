@@ -7,8 +7,6 @@ import { UserContext } from '../../context/UserContext';
 import { LockContext } from '../../context/LockContext';
 import Footer from '../Partials/Footer';
 import { RoutesContext } from '../../context/RoutesContext';
-// import usePermissions from '../../hooks/usePermissions';
-
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -40,8 +38,7 @@ function Main({ routes }) {
   });
 
   useEffect(() => {
-    console.log(loginStatus, location.pathname);
-    if (loginStatus && NoAuthAppBar.length && NoAuthAppBar.filter(N => N.route === location.pathname).length) navigate('/home');
+    if (loginStatus && NoAuthAppBar.length && NoAuthAppBar.filter(N => N.route === location.pathname).length) navigate(NoAuthAppBar[0]);
     if (loginStatus && location.pathname === '/signout') {
       unRegisterUser();
       navigate(NoAuthAppBar[0].route);
@@ -50,6 +47,7 @@ function Main({ routes }) {
     if (!loginStatus && NoAuthAppBar.length) {
       navigate(NoAuthAppBar[0].route);
     }
+    console.log(NoAuthAppBar, _default, allRoutes);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loginStatus, NoAuthAppBar, _default]);
 
@@ -63,7 +61,7 @@ function Main({ routes }) {
               allRoutes
                 .filter(A => !A.noAuth === loginStatus)
                 .map(r => <Route component={TabPanel} key={r.id} path={r.route} index={r.id} element={r.component}></Route>)}
-            <Route path='*' element={<Navigate to={loginStatus ? '/home' : '/signin'} />} />
+            <Route path='*' element={<Navigate to={loginStatus ? _default[0]?.route || '/home' : NoAuthAppBar[0]?.route || '/signin'} />} />
           </Routes>
           <Footer />
         </>

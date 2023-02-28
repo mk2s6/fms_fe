@@ -2,9 +2,9 @@ import { useState, createContext, useEffect, useContext } from 'react';
 import useAPICall from '../hooks/useAPICall';
 import { UserContext } from './UserContext';
 
-export const RestaurantContext = createContext();
+export const ApplicationContext = createContext();
 
-export const RestaurantContextProvider = props => {
+export const ApplicationContextProvider = props => {
   const [modules, setModules] = useState([]);
   const { APIRequest } = useAPICall(false, false);
   const { loginStatus } = useContext(UserContext);
@@ -35,15 +35,15 @@ export const RestaurantContextProvider = props => {
   }, [loginStatus]);
 
   return (
-    <RestaurantContext.Provider
+    <ApplicationContext.Provider
       value={{
         modules,
         loadFlags,
       }}
     >
       {props.children}
-    </RestaurantContext.Provider>
+    </ApplicationContext.Provider>
   );
 };
 
-export const RestaurantContextConsumer = RestaurantContext.Consumer;
+export const ApplicationContextConsumer = ApplicationContext.Consumer;

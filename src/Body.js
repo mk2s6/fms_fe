@@ -10,7 +10,7 @@ import { ThemeContext } from './context/ThemeContext';
 export function Body() {
   const { currentTheme } = useContext(ThemeContext);
 
-  const [T, setT] = useState(createTheme(themeOptions[0]));
+  const [T, setT] = useState(createTheme(themeOptions[3]));
 
   useEffect(() => {
     currentTheme && setT(createTheme(currentTheme));

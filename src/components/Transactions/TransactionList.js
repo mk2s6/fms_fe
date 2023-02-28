@@ -1,9 +1,7 @@
-import { AddCircleTwoTone, DownloadForOfflineTwoTone, UploadFileTwoTone } from '@mui/icons-material';
-import { Container, ListItem, MenuItem, Pagination, Paper, Select, Stack } from '@mui/material';
+import { Container, ListItem, MenuItem, Pagination, Paper, Select, Stack, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { useEffect, useState } from 'react';
 import useAPICall from '../../hooks/useAPICall';
-import SpeedDialInput from '../System/SpeedDialInput';
 import TransactionListItem from './TransactionListItem';
 
 const rowsPerPageConfig = [1, 5, 10, 15, 20, 25, 50, 100];
@@ -14,34 +12,6 @@ export default function TransactionsList({ API, filters, currentPage, ...props }
   const [limit, setLimit] = useState(rowsPerPageConfig[1]);
   const [totalPages, setTotalPages] = useState(0);
   const { APIRequest } = useAPICall();
-
-  const toolTopActions = [
-    {
-      key: 'Add',
-      icon: <AddCircleTwoTone />,
-      toolTip: 'Add Transactions',
-      action: () => {
-        // setClickType('CREATE');
-      },
-    },
-    {
-      key: 'bulk-upload',
-      icon: <UploadFileTwoTone />,
-      toolTip: 'Bulk add transactions',
-      action: () => {
-        // setClickType('BULK_CREATE');
-        alert('This feature is coming soon..!!');
-      },
-    },
-    {
-      key: 'bulk-create-sample',
-      icon: <DownloadForOfflineTwoTone />,
-      toolTip: 'Bulk Create - sample',
-      action: () => {
-        alert('This feature is coming soon..!!');
-      },
-    },
-  ];
 
   const getDataRows = async (page_no, limit) => {
     try {
@@ -79,6 +49,15 @@ export default function TransactionsList({ API, filters, currentPage, ...props }
   return (
     <>
       <Container component={Box} maxWidth='xl' sx={{ mt: 1, p: 0.5 }} disableGutters>
+        {!!data && data.length === 0 && (
+          <Box component={Paper} sx={{ width: '70%', m: 'auto' }} justifyContent='center' alignItems='center'>
+            <Stack sx={{ width: '100%', height: '100px' }} direction={'column'} justifyContent='center' alignItems='center'>
+              <Typography variant='button' sx={{ fontSize: 16 }}>
+                No Transactions exist.
+              </Typography>
+            </Stack>
+          </Box>
+        )}
         {!!data && data.length > 0 && (
           <Box component={Paper} sx={{ minWidth: '100%' }} justifyContent='center'>
             <Stack sx={{ width: '100%' }} direction={'column'} alignItems='center'>
@@ -116,20 +95,7 @@ export default function TransactionsList({ API, filters, currentPage, ...props }
             </Stack>
           </Box>
         )}
-        {data.legth === 0 && (
-          <Stack component={Paper} justifyContent='center' alignItems={'center'} direction={{ sm: 'column', md: 'row', lg: 'row', xl: 'row' }}>
-            <ListItem sx={{ display: '-webkit-box', '-webkit-box-pack': 'center' }}>
-              Rows:
-              <Select sx={{ ml: 1 }} size='small' id='limit-change' value={limit} onChange={handleLimitChange} autoWidth dense>
-                {rowsPerPageConfig.map(L => (
-                  <MenuItem value={L}>{L}</MenuItem>
-                ))}
-              </Select>
-            </ListItem>
-          </Stack>
-        )}
       </Container>
-      <SpeedDialInput actions={toolTopActions} ariaLabel='Create Options - Add a Transaction' />
     </>
   );
 }

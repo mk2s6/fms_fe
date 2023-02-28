@@ -9,3 +9,5 @@ export const getCurrencyForListFormat = (value, type, currency) => {
   const symbol = ['CREDIT', 'CASHBACK', 'REFUND'].includes(type) ? '+' : ['DEBIT'].includes(type) ? '-' : '';
   return `${symbol}${getLocalCurrencyFormat(value, currency)}`;
 };
+
+export const inputName = () => `${Math.random().toString(36).substring(2, 15)}${Math.random().toString(36).substring(2, 15)}`;

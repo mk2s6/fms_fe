@@ -1,11 +1,11 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { RestaurantContext } from './RestaurantContext';
+import { ApplicationContext } from './ApplicationContext';
 import { MODULES } from '../commons/routes';
 
 export const RoutesContext = createContext();
 
 export const RoutesContextProvider = props => {
-  const { modules } = useContext(RestaurantContext);
+  const { modules } = useContext(ApplicationContext);
 
   const [appBarRoutes, setAppBarRoutes] = useState([]);
   const [homeRoutes, setHomeRoutes] = useState([]);
@@ -25,7 +25,6 @@ export const RoutesContextProvider = props => {
   };
 
   useEffect(() => {
-    console.log(allRoutes);
     allRoutes.length && setAppBarRoutes(allRoutes.filter(R => R.in_app_bar));
     allRoutes.length && setTitleRoutes(allRoutes.filter(R => R.title));
     allRoutes.length && setHomeRoutes(allRoutes.filter(R => R.in_home));
@@ -35,9 +34,10 @@ export const RoutesContextProvider = props => {
   }, [allRoutes]);
 
   useEffect(() => {
+    console.log(MODULES, modules);
     ((MODULES && MODULES.length) || (modules && modules.length)) && refreshRoutes();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [MODULES, modules]);
+  }, [modules]);
 
   return (
     <RoutesContext.Provider value={{ appBarRoutes, homeRoutes, titleRoutes, navRoutes, allRoutes, _default, NoAuthAppBar }}>

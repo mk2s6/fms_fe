@@ -6,6 +6,7 @@ import { Btn, SelectDropDown, TextBox } from '../System/Inputs';
 import { useSnackbar } from 'notistack';
 import useAPICall from '../../hooks/useAPICall';
 import useValidations from '../../hooks/useValidations';
+import SwitchInput from '../System/Inputs/SwitchInput';
 
 export default function PaymentMethodAddUpdateForm({ data, api, formItems, display, mode, setDisplay, label, ...props }) {
   const { enqueueSnackbar } = useSnackbar();
@@ -23,7 +24,9 @@ export default function PaymentMethodAddUpdateForm({ data, api, formItems, displ
     validateString(4, 4),
   );
 
-  const [pmId, bindPMId] = useInput(0, null);
+  const [active, bindActive, activeValidations] = useInput('', 2);
+
+  const [pmId, bindPMId] = useState(null);
 
   const disabledStatus = mode === 'VIEW';
 
@@ -31,12 +34,15 @@ export default function PaymentMethodAddUpdateForm({ data, api, formItems, displ
     name: nameValidations,
     type: typeValidations,
     last4Digit: last4DigitsValidations,
+    active: activeValidations,
   };
 
   const setDefaultData = () => {
-    bindName.setDefaultValue(data.name);
-    bindType.setDefaultValue(data.type);
-    bindLast4Digits.setDefaultValue(data.last4Digits);
+    bindPMId(data.id);
+    bindName.SetDefaultValue(data.name);
+    bindType.SetDefaultValue(data.type);
+    bindLast4Digits.SetDefaultValue(data.last4Digits);
+    bindActive.SetDefaultValue(data.active);
   };
 
   const inputFields = [bindName, bindType, bindLast4Digits];
@@ -69,7 +75,7 @@ export default function PaymentMethodAddUpdateForm({ data, api, formItems, displ
     };
     try {
       await APIRequest(api, reqData);
-      handleModalClose(true)();
+      await handleModalClose(true)();
     } catch (e) {
       if (e.type === 0 && e.errors.length) {
         setValidations(validationFields, e.errors);
@@ -111,11 +117,19 @@ export default function PaymentMethodAddUpdateForm({ data, api, formItems, displ
                   <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                     <TextBox
                       id='last4Digits'
-                      label='Last 4 digits of payment method'
+                      label='Payment Method last 4 Digits'
                       type='text'
-                      fullWidth
                       value={last4Digits}
                       {...bindLast4Digits}
+                      required
+                      disabled={disabledStatus}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={12} lg={12} xl={12} alignItems='center' justifyContent='center'>
+                    <SwitchInput
+                      id='setActive'
+                      label={active ? 'Active Payment Method' : 'In-Active Payment Method'}
+                      {...bindActive}
                       required
                       disabled={disabledStatus}
                     />
@@ -124,7 +138,7 @@ export default function PaymentMethodAddUpdateForm({ data, api, formItems, displ
               </DialogContent>
               <DialogActions>
                 <Btn onClick={handleModalClose(false)}>close</Btn>
-                <Btn type='submit' disabled={disabledStatus} onClick={submitAPI}>
+                <Btn type='submit' disabled={disabledStatus}>
                   {mode}
                 </Btn>
               </DialogActions>

@@ -43,7 +43,7 @@ export default function MultiSelectForm({
             labelId={`multiple-chip-label-${props.label}`}
             displayEmpty
             fullWidth
-            label={label}
+            label={props.label}
             multiple
             value={[]}
             renderValue={() => ''}

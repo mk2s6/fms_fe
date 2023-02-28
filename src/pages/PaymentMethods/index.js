@@ -15,6 +15,8 @@ export default function PaymentMethods() {
   const [paymentMethods, setPaymentMethods] = useState([]);
   const [updateData, setUpdateData] = useState({});
 
+  const [reload, setReload] = useState(false);
+
   const getPaymentMethods = async () => {
     try {
       const { data } = await APIRequest('GET_PAYMENT_METHODS_LIST');
@@ -26,7 +28,7 @@ export default function PaymentMethods() {
     (to = '') =>
     async reload => {
       setClickType(to);
-      reload && (await getPaymentMethods());
+      reload && setReload(reload);
     };
 
   useEffect(() => {
@@ -34,6 +36,14 @@ export default function PaymentMethods() {
       await getPaymentMethods();
     })();
   }, []);
+
+  useEffect(() => {
+    reload &&
+      (async () => {
+        await getPaymentMethods();
+        setReload(false);
+      })();
+  }, [reload]);
 
   const toolTopActions = [
     {
@@ -47,8 +57,8 @@ export default function PaymentMethods() {
   ];
 
   const handleUpdateRequest = type => data => () => {
-    setUpdateData(data);
     setClickType(type);
+    setUpdateData(data);
   };
 
   const paymentMethodActions = [
@@ -99,7 +109,7 @@ export default function PaymentMethods() {
 
           {paymentMethods.length > 0 &&
             paymentMethods.map(pm => {
-              return <PaymentMethodCard key={pm.id} actions={paymentMethodActions} data={pm} />;
+              return <PaymentMethodCard key={`${pm.id}-${pm.name}`} actions={paymentMethodActions} data={pm} />;
             })}
         </Grid>
 

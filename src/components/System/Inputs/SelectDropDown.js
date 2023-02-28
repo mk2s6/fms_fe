@@ -24,7 +24,7 @@ export default function SelectDropDown({ items, size, label, id, fullWidth, read
           </MenuItem>
         ))}
       </Select>
-      {props.error ? <FormHelperText>{props.helperText}</FormHelperText> : <></>}
+      {props.error ? <FormHelperText>{props.HelperText}</FormHelperText> : <></>}
     </FormControl>
   );
 }

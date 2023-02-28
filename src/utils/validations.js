@@ -18,7 +18,7 @@ export function validatePaymentMethodTypes(type) {
 export const checkErrors = fields => {
   return fields
     .map(_f => {
-      _f.validate();
+      _f.Validate();
       return _f;
     })
     .map(_f => _f.error)

@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 function Registration() {
   const [username, bindUsername, usernameValidation] = useInput('', null, 'Please provide a Username to use for login.!', validateString(3));
   const [password, bindPassword, passwordValidation] = useInput('', null, 'Please provide a valid Password.', validateString(8));
-  const [name, bindName, nameValidation] = useInput('', null, 'Please provide a valid Password.', validateString(8));
+  const [name, bindName, nameValidation] = useInput('', null, 'Please provide a valid Name.', validateString(3, 50));
   const [email, bindEmail, emailValidation] = useInput('', null, 'Please provide a valid Password.', validateString(8));
   const [mobile, bindMobile, mobileValidation] = useInput('', null, 'Please provide a valid Password.', validateString(8));
   const { APIRequest } = useAPICall();

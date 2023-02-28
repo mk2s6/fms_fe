@@ -8,7 +8,7 @@ import Lock from './components/Lock';
 import { LoaderContextProvider } from './context/LoaderContext';
 import { LockContextProvider } from './context/LockContext';
 import { UserContextProvider } from './context/UserContext';
-import { RestaurantContextProvider } from './context/RestaurantContext';
+import { ApplicationContextProvider } from './context/ApplicationContext';
 import { RoutesContextProvider } from './context/RoutesContext';
 
 const notistackRef = React.createRef();
@@ -39,7 +39,7 @@ function App() {
       <Router>
         <LoaderContextProvider>
           <UserContextProvider>
-            <RestaurantContextProvider>
+            <ApplicationContextProvider>
               <RoutesContextProvider>
                 <LockContextProvider>
                   <Loader />
@@ -52,7 +52,7 @@ function App() {
                   />
                 </LockContextProvider>
               </RoutesContextProvider>
-            </RestaurantContextProvider>
+            </ApplicationContextProvider>
           </UserContextProvider>
         </LoaderContextProvider>
       </Router>
