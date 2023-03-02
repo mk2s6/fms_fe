@@ -63,7 +63,7 @@ export default function PaymentMethodCard({ data, actions, ...props }) {
             )}
           </Grid>
         </CardContent>
-        <CardActions sx={{ mt: 0.1, justifyContent: { xs: 'start', sm: 'start', md: 'end' } }}>
+        <CardActions sx={{ mt: 0.1, p: 0, mb: 1, justifyContent: { xs: 'start', sm: 'start', md: 'end' } }}>
           {actions.map(action => (
             <Btn key={action.key} type='small' onClick={action.action(data)} {...action.props}>
               <Tooltip title={action.toolTip}>{action.icon}</Tooltip>
