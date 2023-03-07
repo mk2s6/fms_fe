@@ -18,14 +18,13 @@ export const ApplicationContextProvider = props => {
     try {
       const { data } = await APIRequest('GET_MODULES');
       setModules(data);
-    } catch (e) {}
+    } catch (e) { }
   };
 
   const refreshMeta = async () => {
     try {
       await refreshModules();
     } catch (e) {
-      console.log(e);
     }
   };
 

@@ -20,7 +20,6 @@ export default function TransactionsList({ API, filters, currentPage, ...props }
       setTotalPages(data.totalPages);
       return data.items;
     } catch (e) {
-      console.log(e);
     }
   };
 

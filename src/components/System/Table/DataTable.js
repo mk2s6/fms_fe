@@ -17,7 +17,6 @@ export default function DataTable({ tableColumns, API, dataTotalRows, dataProper
       setRows(data[dataProperty]);
       setTotalRows(data[dataTotalRows]);
     } catch (e) {
-      console.log(e);
     }
   };
 

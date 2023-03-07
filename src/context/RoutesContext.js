@@ -34,7 +34,6 @@ export const RoutesContextProvider = props => {
   }, [allRoutes]);
 
   useEffect(() => {
-    console.log(MODULES, modules);
     ((MODULES && MODULES.length) || (modules && modules.length)) && refreshRoutes();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [modules]);

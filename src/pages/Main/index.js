@@ -47,7 +47,6 @@ function Main({ routes }) {
     if (!loginStatus && NoAuthAppBar.length) {
       navigate(NoAuthAppBar[0].route);
     }
-    console.log(NoAuthAppBar, _default, allRoutes);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loginStatus, NoAuthAppBar, _default]);
 

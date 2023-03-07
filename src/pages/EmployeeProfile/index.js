@@ -19,7 +19,6 @@ function Profile() {
       setDetails(data[0]);
       return data[0];
     } catch (e) {
-      console.log(e);
     }
   };
 

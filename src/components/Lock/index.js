@@ -34,7 +34,6 @@ export default function Lock() {
             setLock(false);
             resetPin();
           } catch (e) {
-            console.log(e);
             if (e.type === 2 && e.code === '30026') {
               resetPin();
             }

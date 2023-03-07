@@ -1,4 +1,4 @@
-import { Fade, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Grid, Checkbox, Divider } from '@mui/material';
+import { Fade, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Grid, Divider } from '@mui/material';
 import { useEffect, useState } from 'react';
 import useInput from '../../hooks/useInput';
 import { checkErrors, PAYMENT_METHOD_TYPES, validatePaymentMethodTypes, validateString } from '../../utils/validations';

@@ -5,9 +5,6 @@ import { LoaderContext } from '../context/LoaderContext';
 import { UserContext } from '../context/UserContext';
 import axios from 'axios';
 
-const HOTEL_HEADER_KEY = process.env.REACT_APP_HEADER_KEY;
-const HOTEL_HEADER_VALUE = process.env.REACT_APP_HEADER_VALUE;
-
 const BASE_URL = process.env.REACT_APP_ENV === 'LOCAL' ? 'http://192.168.1.3:4200' : process.env.REACT_APP_API_URL || 'http://localhost:4200';
 
 const request = axios.create({ baseURL: BASE_URL, timeout: 3000 });
@@ -25,7 +22,6 @@ const useAPICall = (getNotification = false, loader = true) => {
       method,
       data: body,
       ...(customHeaders ? { headers: customHeaders } : {}),
-      ...(login ? { headers: { [HOTEL_HEADER_KEY]: [HOTEL_HEADER_VALUE] } } : {}),
     });
   };
 

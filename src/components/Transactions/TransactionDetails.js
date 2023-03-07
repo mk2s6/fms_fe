@@ -25,7 +25,6 @@ export default function TransactionDetails({ id, open, toggle }) {
       const { data } = await APIRequest('GET_TRANSACTION_DETAILS', { id });
       setDetails(data[0]);
     } catch (e) {
-      console.log(e);
     }
   };
 
