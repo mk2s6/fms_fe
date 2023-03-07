@@ -57,9 +57,8 @@ export const GET_TRANSACTION_MODES = () => ({ url: `/assets/commons/transaction-
 //
 // --------------------------------------------------------------------
 export const GET_TRANSACTIONS_LIST = ({ page_no, limit, ledger, parent_transaction, lending }) => ({
-  url: `/transactions?page_no=${page_no}&limit=${limit}${ledger ? `&ledger=${ledger}` : ''}${lending ? `&lending=${lending}` : ''}${
-    parent_transaction ? `&parent_transaction=${parent_transaction}` : ''
-  }`,
+  url: `/transactions?page_no=${page_no}&limit=${limit}${ledger ? `&ledger=${ledger}` : ''}${lending ? `&lending=${lending}` : ''}${parent_transaction ? `&parent_transaction=${parent_transaction}` : ''
+    }`,
   method: 'get',
 });
 export const GET_TRANSACTION_DETAILS = ({ id }) => ({ url: `/transactions/${id}`, method: 'get' });
@@ -105,4 +104,9 @@ export const UPDATE_PAYMENT_METHOD = ({ name, type, last4Digits, id }) => ({
 export const DELETE_PAYMENT_METHOD = ({ id }) => ({
   url: `/payment-methods/${id}`,
   method: 'delete',
+});
+export const TOGGLE_PAYMENT_METHOD_STATUS = ({ active, id }) => ({
+  url: `/payment-methods/${id}/status`,
+  method: 'put',
+  body: { active },
 });

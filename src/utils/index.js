@@ -11,3 +11,5 @@ export const getCurrencyForListFormat = (value, type, currency) => {
 };
 
 export const inputName = () => `${Math.random().toString(36).substring(2, 15)}${Math.random().toString(36).substring(2, 15)}`;
+
+export const generateKeysFromObjects = (obj) => [...Object.values(obj)].join("-")

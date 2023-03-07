@@ -7,6 +7,7 @@ import PaymentMethodCard from '../../components/PaymentMethods/PaymentMethodCard
 import { Btn } from '../../components/System/Inputs';
 import SpeedDialInput from '../../components/System/SpeedDialInput';
 import useAPICall from '../../hooks/useAPICall';
+import { generateKeysFromObjects } from '../../utils';
 
 export default function PaymentMethods() {
   const [clickType, setClickType] = useState('');
@@ -21,15 +22,15 @@ export default function PaymentMethods() {
     try {
       const { data } = await APIRequest('GET_PAYMENT_METHODS_LIST');
       setPaymentMethods(data);
-    } catch (e) {}
+    } catch (e) { }
   };
 
   const setDisplay =
     (to = '') =>
-    async reload => {
-      setClickType(to);
-      reload && setReload(reload);
-    };
+      async reload => {
+        setClickType(to);
+        reload && setReload(reload);
+      };
 
   useEffect(() => {
     (async () => {
@@ -109,7 +110,7 @@ export default function PaymentMethods() {
 
           {paymentMethods.length > 0 &&
             paymentMethods.map(pm => {
-              return <PaymentMethodCard key={`${pm.id}-${pm.name}`} actions={paymentMethodActions} data={pm} />;
+              return <PaymentMethodCard key={generateKeysFromObjects(pm)} actions={paymentMethodActions} data={pm} />;
             })}
         </Grid>
 

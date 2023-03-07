@@ -27,6 +27,7 @@ export default function PaymentMethodAddUpdateForm({ data, api, formItems, displ
   const [active, bindActive, activeValidations] = useInput('', 2);
 
   const [pmId, bindPMId] = useState(null);
+  const [updateStatus, setUpdateStatus] = useState(false);
 
   const disabledStatus = mode === 'VIEW';
 
@@ -54,7 +55,7 @@ export default function PaymentMethodAddUpdateForm({ data, api, formItems, displ
 
   const handleModalClose = reload => () => {
     setModal(false);
-    setDisplay('')(reload);
+    setDisplay('')(reload && mode !== 'VIEW');
   };
 
   const submitAPI = async () => {
@@ -82,6 +83,37 @@ export default function PaymentMethodAddUpdateForm({ data, api, formItems, displ
       }
     }
   };
+
+  const toggleStatusChange = async () => {
+    if (checkErrors([bindActive])) {
+      enqueueSnackbar('Please Fix validation errors to proceed.!', {
+        variant: 'warning',
+      });
+      return;
+    }
+
+    if (mode === 'VIEW') return;
+
+    const reqData = {
+      id: mode === 'UPDATE' ? pmId : null,
+      active,
+    };
+    try {
+      await APIRequest('TOGGLE_PAYMENT_METHOD_STATUS', reqData);
+    } catch (e) {
+      if (e.type === 0 && e.errors.length) {
+        setValidations(validationFields, e.errors);
+      }
+    }
+  };
+
+  useEffect(() => {
+    updateStatus && (async () => {
+      await toggleStatusChange();
+      setUpdateStatus(false)
+    })()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [updateStatus, active])
 
   return (
     <>
@@ -130,14 +162,17 @@ export default function PaymentMethodAddUpdateForm({ data, api, formItems, displ
                       id='setActive'
                       label={active ? 'Active Payment Method' : 'In-Active Payment Method'}
                       {...bindActive}
-                      required
                       disabled={disabledStatus}
+                      onChange={async (e) => {
+                        bindActive.onChange(e);
+                        setUpdateStatus(true);
+                      }}
                     />
                   </Grid>
                 </Grid>
               </DialogContent>
               <DialogActions>
-                <Btn onClick={handleModalClose(false)}>close</Btn>
+                <Btn onClick={handleModalClose(true)}>close</Btn>
                 <Btn type='submit' disabled={disabledStatus}>
                   {mode}
                 </Btn>
