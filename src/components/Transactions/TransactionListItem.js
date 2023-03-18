@@ -1,4 +1,4 @@
-import { Avatar, ListItemAvatar, ListItemButton, ListItemText, styled, Typography } from '@mui/material';
+import { Avatar, Grid, ListItemAvatar, ListItemButton, ListItemText, styled, Typography } from '@mui/material';
 import { formatDisplayDate } from '../../commons/dates';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import { useState } from 'react';
@@ -43,20 +43,36 @@ export default function TransactionListItem({ data }) {
           toggleDetails();
         }}
       >
-        <ListItemAvatar>
+        <ListItemAvatar alignItems="flex-start">
           <Avatar>
             <ReceiptLongIcon />
           </Avatar>
         </ListItemAvatar>
-        <ListItemText sx={{ width: '30%' }} primary={data.purpose} secondary={formatDisplayDate(data.date)} />
-        <ListItemText primary={data.mode} sx={{ textAlign: 'center', width: '20%' }} />
-        <ListItemText primary={data.category} sx={{ textAlign: 'center', width: '30%' }} />
-        <ListItemText sx={{ textAlign: 'center', width: '20%' }}>
-          <Amount variant='button' type={data.type}>
-            {getCurrencyForListFormat(data.value, data.type, data.currencyCode)}
-          </Amount>
-        </ListItemText>
-      </ListItemButton>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={12} md={6}>
+            <ListItemText primary={data.purpose} secondary={formatDisplayDate(data.date)} />
+          </Grid>
+
+          <Grid item xs={4} sm={4} md={2} sx={{
+            display: "flex", alignItems: 'center'
+          }}>
+            <Typography>{data.mode}</Typography>
+          </Grid>
+
+          <Grid item xs={4} sm={4} md={2} sx={{ display: "flex", alignItems: 'center' }}>
+            <Typography>{data.category}</Typography>
+          </Grid>
+
+          <Grid item xs={4} sm={4} md={2} sx={{ display: "flex", alignItems: 'center' }}>
+            <Typography >
+              <Amount variant='button' type={data.type}>
+                {getCurrencyForListFormat(data.value, data.type, data.currencyCode)}
+              </Amount>
+            </Typography>
+          </Grid>
+
+        </Grid>
+      </ListItemButton >
     </>
   );
 }

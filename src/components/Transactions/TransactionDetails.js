@@ -78,11 +78,12 @@ export default function TransactionDetails({ id, open, toggle }) {
             <Typography sx={{ textAlign: 'center' }}>
               <ListItemText
                 primary={
-                  <Typography sx={{ textTransform: 'uppercase', fontWeight: 'bold' }} variant='body1'>
-                    Transaction Details
-                  </Typography>
+                  'Transaction Details'
                 }
-                secondary={<Typography sx={{ fontSize: 14 }}>{formatDisplayDate(details.date)}</Typography>}
+                primaryTypographyProps={{ sx: { textTransform: 'uppercase', fontWeight: 'bold' }, variant: 'body1' }}
+
+                secondary={formatDisplayDate(details.date)}
+                secondaryTypographyProps={{ sx: { fontSize: 14 } }}
               />
             </Typography>
           </Box>

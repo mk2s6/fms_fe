@@ -21,7 +21,7 @@ function App() {
   return (
     <SnackbarProvider
       ref={notistackRef}
-      autoHideDuration={3000}
+      autoHideDuration={1500}
       maxSnack={3}
       TransitionComponent={Grow}
       anchorOrigin={{
