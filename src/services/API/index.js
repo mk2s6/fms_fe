@@ -48,8 +48,8 @@ export const USER_PERMISSIONS = _data => ({ url: `/users/my/permissions` });
 // export const GET_STATES = ({ country }) => ({ url: `/assets/commons/states/${country}`, method: 'get' });
 // export const GET_CITIES = (56Y8T) => ({ url: `/assets/commons/cities/${state}`, method: 'get' });
 export const GET_CURRENCY_CODES = ({ country }) => ({ url: `/assets/commons/currency-codes/${country || 'India'}`, method: 'get' });
-export const GET_TRANSACTION_CATEGORIES = () => ({ url: `/assets/commons/payment/modes`, method: 'get' });
-export const GET_TRANSACTION_MODES = () => ({ url: `/assets/commons/transaction-categories`, method: 'get' });
+export const GET_TRANSACTION_MODES = () => ({ url: `/assets/commons/transaction-modes`, method: 'get' });
+export const GET_TRANSACTION_CATEGORIES = () => ({ url: `/assets/commons/transaction-categories`, method: 'get' });
 
 // --------------------------------------------------------------------
 //

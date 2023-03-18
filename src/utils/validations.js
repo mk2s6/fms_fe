@@ -15,6 +15,10 @@ export function validatePaymentMethodTypes(type) {
   return PAYMENT_METHOD_TYPES.includes(type);
 }
 
+export function validateTransactionCategories(categories) {
+  return categories.length;
+}
+
 export const checkErrors = fields => {
   return fields
     .map(_f => {

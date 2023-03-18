@@ -1,3 +1,4 @@
+
 import { Container, ListItem, MenuItem, Pagination, Paper, Select, Stack, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { useEffect, useState } from 'react';
@@ -6,12 +7,21 @@ import TransactionListItem from './TransactionListItem';
 
 const rowsPerPageConfig = [1, 5, 10, 15, 20, 25, 50, 100];
 
-export default function TransactionsList({ API, filters, currentPage, ...props }) {
+export default function TransactionsList({ API, filters, reload, setReload, setClickType, currentPage, ...props }) {
   const [data, setData] = useState([]);
   const [page_no, setCurrentPage] = useState(currentPage || 1);
   const [limit, setLimit] = useState(rowsPerPageConfig[1]);
   const [totalPages, setTotalPages] = useState(0);
   const { APIRequest } = useAPICall();
+
+  useEffect(() => {
+    reload &&
+      (async () => {
+        await getDataRows(currentPage || 1, limit);
+        setReload(false);
+      })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reload]);
 
   const getDataRows = async (page_no, limit) => {
     try {
@@ -45,9 +55,10 @@ export default function TransactionsList({ API, filters, currentPage, ...props }
     setLimit(e.target.value);
   };
 
+
   return (
     <>
-      <Container component={Box} maxWidth='xl' sx={{ mt: 1, p: 0.5 }} disableGutters>
+      <Container component={Box} maxWidth='lg' sx={{ mt: 1, p: 0.5 }} disableGutters>
         {!!data && data.length === 0 && (
           <Box component={Paper} sx={{ width: '70%', m: 'auto' }} justifyContent='center' alignItems='center'>
             <Stack sx={{ width: '100%', height: '100px' }} direction={'column'} justifyContent='center' alignItems='center'>

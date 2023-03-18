@@ -6,6 +6,9 @@ export const ApplicationContext = createContext();
 
 export const ApplicationContextProvider = props => {
   const [modules, setModules] = useState([]);
+  const [paymentMethods, setPaymentMethods] = useState([]);
+  const [transactionModes, setTransactionModes] = useState([]);
+  const [transactionCategories, setTransactionCatgories] = useState([]);
   const { APIRequest } = useAPICall(false, false);
   const { loginStatus } = useContext(UserContext);
 
@@ -21,11 +24,38 @@ export const ApplicationContextProvider = props => {
     } catch (e) { }
   };
 
+  const refreshPaymentMethods = async () => {
+    try {
+      const { data } = await APIRequest('GET_PAYMENT_METHODS_LIST');
+      setPaymentMethods(data);
+    } catch (e) { }
+  };
+
+  const refreshTransactionModes = async () => {
+    try {
+      const { data } = await APIRequest('GET_TRANSACTION_MODES');
+      setTransactionModes(data);
+    } catch (e) { }
+  };
+
+  const refreshTransactionCategories = async () => {
+    try {
+      const { data } = await APIRequest('GET_TRANSACTION_CATEGORIES');
+      setTransactionCatgories(data);
+    } catch (e) { }
+  };
+
+  const refreshData = async () => {
+    loginStatus && (await refreshPaymentMethods());
+    loginStatus && (await refreshTransactionModes());
+    loginStatus && (await refreshTransactionCategories());
+  };
+
   const refreshMeta = async () => {
     try {
       await refreshModules();
-    } catch (e) {
-    }
+      loginStatus && (await refreshData());
+    } catch (e) { }
   };
 
   useEffect(() => {
@@ -38,6 +68,10 @@ export const ApplicationContextProvider = props => {
       value={{
         modules,
         loadFlags,
+        paymentMethods,
+        refreshData,
+        transactionCategories,
+        transactionModes,
       }}
     >
       {props.children}
