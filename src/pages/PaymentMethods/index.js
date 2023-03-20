@@ -10,122 +10,127 @@ import useAPICall from '../../hooks/useAPICall';
 import { generateKeysFromObjects } from '../../utils';
 
 export default function PaymentMethods() {
-  const [clickType, setClickType] = useState('');
+	const [clickType, setClickType] = useState('');
 
-  const { APIRequest } = useAPICall(false);
-  const [paymentMethods, setPaymentMethods] = useState([]);
-  const [updateData, setUpdateData] = useState({});
+	const { APIRequest } = useAPICall(false);
+	const [paymentMethods, setPaymentMethods] = useState([]);
+	const [updateData, setUpdateData] = useState({});
 
-  const [reload, setReload] = useState(false);
+	const [reload, setReload] = useState(false);
 
-  const getPaymentMethods = async () => {
-    try {
-      const { data } = await APIRequest('GET_PAYMENT_METHODS_LIST');
-      setPaymentMethods(data);
-    } catch (e) { }
-  };
+	const getPaymentMethods = async () => {
+		try {
+			const { data } = await APIRequest('GET_PAYMENT_METHODS_LIST');
+			setPaymentMethods(data);
+		} catch (e) {}
+	};
 
-  const setDisplay =
-    (to = '') =>
-      async reload => {
-        setClickType(to);
-        reload && setReload(reload);
-      };
+	const setDisplay =
+		(to = '') =>
+		async reload => {
+			setClickType(to);
+			reload && setReload(reload);
+		};
 
-  useEffect(() => {
-    (async () => {
-      await getPaymentMethods();
-    })();
-  }, []);
+	useEffect(() => {
+		(async () => {
+			await getPaymentMethods();
+		})();
+	}, []);
 
-  useEffect(() => {
-    reload &&
-      (async () => {
-        await getPaymentMethods();
-        setReload(false);
-      })();
-  }, [reload]);
+	useEffect(() => {
+		reload &&
+			(async () => {
+				await getPaymentMethods();
+				setReload(false);
+			})();
+	}, [reload]);
 
-  const toolTopActions = [
-    {
-      key: 'CREATE',
-      icon: <AddCircleTwoTone />,
-      toolTip: 'Add Payment Method',
-      action: () => {
-        setClickType('CREATE');
-      },
-    },
-  ];
+	const toolTopActions = [
+		{
+			key: 'CREATE',
+			icon: <AddCircleTwoTone />,
+			toolTip: 'Add Payment Method',
+			action: () => {
+				setClickType('CREATE');
+			},
+		},
+	];
 
-  const handleUpdateRequest = type => data => () => {
-    setClickType(type);
-    setUpdateData(data);
-  };
+	const handleUpdateRequest = type => data => () => {
+		setClickType(type);
+		setUpdateData(data);
+	};
 
-  const paymentMethodActions = [
-    {
-      key: 'VIEW',
-      icon: <VisibilityTwoTone />,
-      toolTip: 'View',
-      action: handleUpdateRequest('VIEW'),
-    },
-    {
-      key: 'UPDATE',
-      icon: <EditTwoTone />,
-      toolTip: 'Update',
-      action: handleUpdateRequest('UPDATE'),
-    },
-  ];
+	const paymentMethodActions = [
+		{
+			key: 'VIEW',
+			icon: <VisibilityTwoTone />,
+			toolTip: 'View',
+			action: handleUpdateRequest('VIEW'),
+		},
+		{
+			key: 'UPDATE',
+			icon: <EditTwoTone />,
+			toolTip: 'Update',
+			action: handleUpdateRequest('UPDATE'),
+		},
+	];
 
-  const APICalls = {
-    CREATE: 'ADD_PAYMENT_METHOD',
-    UPDATE: 'UPDATE_PAYMENT_METHOD',
-    VIEW: '',
-  };
+	const APICalls = {
+		CREATE: 'ADD_PAYMENT_METHOD',
+		UPDATE: 'UPDATE_PAYMENT_METHOD',
+		VIEW: '',
+	};
 
-  const api = () => APICalls[clickType];
+	const updateToggle = () => {
+		setClickType('UPDATE');
+	};
 
-  return (
-    <>
-      <Container maxWidth='xl' sx={{ mt: 0 }} component='main'>
-        <Grid container justifyContent='center' spacing={2} sx={{ mt: 0.3, p: 1, flexGrow: 1 }}>
-          {paymentMethods.length === 0 && (
-            <Grid item xs={12} sm={12} md={4} lg={3} xl={3} variant='button' underline='none'>
-              <Card sx={{ minHeight: 100 }} color='secondary' variant='elevation' elevation={16}>
-                <CardContent>
-                  <Typography variant='button' color='text.primary'>
-                    Payment Method - Add
-                  </Typography>
-                </CardContent>
-                <CardActions sx={{ justifyContent: 'center' }}>
-                  {toolTopActions.map(action => (
-                    <Btn key={action.key} type='small' onClick={action.action}>
-                      <Tooltip title={action.toolTip}>{action.icon}</Tooltip>
-                    </Btn>
-                  ))}
-                </CardActions>
-              </Card>
-            </Grid>
-          )}
+	const api = () => APICalls[clickType];
 
-          {paymentMethods.length > 0 &&
-            paymentMethods.map(pm => {
-              return <PaymentMethodCard key={generateKeysFromObjects(pm)} actions={paymentMethodActions} data={pm} />;
-            })}
-        </Grid>
+	return (
+		<>
+			<Container maxWidth='xl' sx={{ mt: 0 }} component='main'>
+				<Grid container justifyContent='center' spacing={2} sx={{ mt: 0.3, p: 1, flexGrow: 1 }}>
+					{paymentMethods.length === 0 && (
+						<Grid item xs={12} sm={12} md={4} lg={3} xl={3} variant='button' underline='none'>
+							<Card sx={{ minHeight: 100 }} color='secondary' variant='elevation' elevation={16}>
+								<CardContent>
+									<Typography variant='button' color='text.primary'>
+										Payment Method - Add
+									</Typography>
+								</CardContent>
+								<CardActions sx={{ justifyContent: 'center' }}>
+									{toolTopActions.map(action => (
+										<Btn key={action.key} type='small' onClick={action.action}>
+											<Tooltip title={action.toolTip}>{action.icon}</Tooltip>
+										</Btn>
+									))}
+								</CardActions>
+							</Card>
+						</Grid>
+					)}
 
-        {!!clickType && (
-          <PaymentMethodAddUpdateForm
-            data={updateData}
-            api={api()}
-            label={'Menu-Category-Add-Update-Form'}
-            setDisplay={setDisplay}
-            display={!!clickType}
-            mode={clickType}
-          />
-        )}
-      </Container>
-      <SpeedDialInput actions={toolTopActions} ariaLabel='Create Payment Method' />
-    </>
-  );
+					{paymentMethods.length > 0 &&
+						paymentMethods.map(pm => {
+							return <PaymentMethodCard key={generateKeysFromObjects(pm)} actions={paymentMethodActions} data={pm} />;
+						})}
+				</Grid>
+
+				{!!clickType && (
+					<PaymentMethodAddUpdateForm
+						data={updateData}
+						api={api()}
+						label={'Menu-Category-Add-Update-Form'}
+						setDisplay={setDisplay}
+						display={!!clickType}
+						mode={clickType}
+						updateToggle={updateToggle}
+					/>
+				)}
+			</Container>
+			<SpeedDialInput actions={toolTopActions} ariaLabel='Create Payment Method' />
+		</>
+	);
 }
