@@ -48,29 +48,36 @@ export default function TransactionListItem({ data }) {
 						<ReceiptLongIcon />
 					</Avatar>
 				</ListItemAvatar>
-				<Grid container spacing={2}>
-					<Grid item xs={12} sm={12} md={6}>
-						<ListItemText primary={data.purpose} secondary={formatDisplayDate(data.date)} />
+				<Grid container spacing={1}>
+					<Grid item xs={12} sm={12} md={5}>
+						<ListItemText
+							primary={data.purpose}
+							primaryTypographyProps={{ variant: 'button', sx: { fontSize: '16px' } }}
+							secondary={formatDisplayDate(data.date)}
+							secondaryTypographyProps={{ variant: 'caption' }}
+						/>
 					</Grid>
 
 					<Grid
 						item
-						xs={4}
+						xs={12}
 						sm={4}
-						md={2}
+						md={3}
 						sx={{
 							display: 'flex',
+							justifyContent: 'center',
 							alignItems: 'center',
+							pr: 4,
 						}}
 					>
-						<Typography>{data.mode}</Typography>
+						<Typography variant='overline'>{data.mode}</Typography>
 					</Grid>
 
-					<Grid item xs={4} sm={4} md={2} sx={{ display: 'flex', alignItems: 'center' }}>
-						<Typography>{data.category}</Typography>
+					<Grid item xs={6} sm={4} md={2} sx={{ display: 'flex', justifyContent: 'start', alignItems: 'center' }}>
+						<Typography variant='body2'>{data.category}</Typography>
 					</Grid>
 
-					<Grid item xs={4} sm={4} md={2} sx={{ display: 'flex', alignItems: 'center' }}>
+					<Grid item xs={6} sm={4} md={2} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', p: 0, m: 0 }}>
 						<Typography>
 							<Amount variant='button' type={data.type}>
 								{getCurrencyForListFormat(data.value, data.type, data.currencyCode)}
