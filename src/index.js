@@ -11,16 +11,18 @@ const container = document.getElementById('root');
 const root = createRoot(container);
 
 root.render(
-  <>
-    <ThemeContextProvider>
-      <Body
-        sx={{
-          p: 0,
-          m: 0,
-        }}
-      />
-    </ThemeContextProvider>
-  </>,
+	<>
+		<React.StrictMode>
+			<ThemeContextProvider>
+				<Body
+					sx={{
+						p: 0,
+						m: 0,
+					}}
+				/>
+			</ThemeContextProvider>
+		</React.StrictMode>
+	</>,
 );
 
 reportWebVitals();

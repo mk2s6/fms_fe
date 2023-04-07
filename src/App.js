@@ -37,26 +37,24 @@ function App() {
 			sx={{ zIndex: 1200 }}
 		>
 			<Router>
-				<React.StrictMode>
-					<LoaderContextProvider>
-						<UserContextProvider>
-							<ApplicationContextProvider>
-								<RoutesContextProvider>
-									<LockContextProvider>
-										<Loader />
-										<Lock />
-										<Main
-											sx={{
-												p: 0,
-												m: 0,
-											}}
-										/>
-									</LockContextProvider>
-								</RoutesContextProvider>
-							</ApplicationContextProvider>
-						</UserContextProvider>
-					</LoaderContextProvider>
-				</React.StrictMode>
+				<LoaderContextProvider>
+					<UserContextProvider>
+						<ApplicationContextProvider>
+							<RoutesContextProvider>
+								<LockContextProvider>
+									<Loader />
+									<Lock />
+									<Main
+										sx={{
+											p: 0,
+											m: 0,
+										}}
+									/>
+								</LockContextProvider>
+							</RoutesContextProvider>
+						</ApplicationContextProvider>
+					</UserContextProvider>
+				</LoaderContextProvider>
 			</Router>
 		</SnackbarProvider>
 	);

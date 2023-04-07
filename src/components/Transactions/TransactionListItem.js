@@ -70,7 +70,7 @@ export default function TransactionListItem({ data }) {
 							pr: 4,
 						}}
 					>
-						<Typography variant='body'>{data.mode}</Typography>
+						<Typography variant='body2'>{data.mode}</Typography>
 					</Grid>
 
 					<Grid item xs={6} sm={4} md={2} sx={{ display: 'flex', justifyContent: 'start', alignItems: 'center' }}>
