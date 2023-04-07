@@ -26,31 +26,8 @@ function Main({ routes }) {
 	const { lock } = useContext(LockContext);
 
 	useEffect(() => {
-		const path = localStorage.getItem('beforeReloadPath');
-		if (path) {
-			localStorage.setItem('beforeReloadPath', '');
-			navigate(path);
-		} else if (loginStatus) {
-			navigate(_default[0].route);
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
-
-	useEffect(() => {
-		window.onbeforeunload = function () {
-			localStorage.setItem('beforeReloadPath', location.pathname);
-		};
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [location.pathname]);
-
-	useEffect(() => {
-		if (loginStatus && NoAuthAppBar.length && NoAuthAppBar.filter(N => N.route === location.pathname).length) navigate(NoAuthAppBar[0]);
 		if (loginStatus && location.pathname === '/signout') {
 			unRegisterUser();
-			navigate(NoAuthAppBar[0].route);
-		}
-
-		if (!loginStatus && NoAuthAppBar.length) {
 			navigate(NoAuthAppBar[0].route);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
