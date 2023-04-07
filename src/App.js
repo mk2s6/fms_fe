@@ -14,50 +14,52 @@ import { RoutesContextProvider } from './context/RoutesContext';
 const notistackRef = React.createRef();
 
 const onClickDismiss = key => () => {
-  notistackRef.current.closeSnackbar(key);
+	notistackRef.current.closeSnackbar(key);
 };
 
 function App() {
-  return (
-    <SnackbarProvider
-      ref={notistackRef}
-      autoHideDuration={1500}
-      maxSnack={3}
-      TransitionComponent={Grow}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'center',
-      }}
-      preventDuplicate
-      action={key => (
-        <Button color='error' onClick={onClickDismiss(key)}>
-          Close
-        </Button>
-      )}
-      sx={{ zIndex: 1200 }}
-    >
-      <Router>
-        <LoaderContextProvider>
-          <UserContextProvider>
-            <ApplicationContextProvider>
-              <RoutesContextProvider>
-                <LockContextProvider>
-                  <Loader />
-                  <Lock />
-                  <Main
-                    sx={{
-                      p: 0,
-                      m: 0,
-                    }}
-                  />
-                </LockContextProvider>
-              </RoutesContextProvider>
-            </ApplicationContextProvider>
-          </UserContextProvider>
-        </LoaderContextProvider>
-      </Router>
-    </SnackbarProvider>
-  );
+	return (
+		<SnackbarProvider
+			ref={notistackRef}
+			autoHideDuration={1500}
+			maxSnack={3}
+			TransitionComponent={Grow}
+			anchorOrigin={{
+				vertical: 'top',
+				horizontal: 'center',
+			}}
+			preventDuplicate
+			action={key => (
+				<Button color='error' onClick={onClickDismiss(key)}>
+					Close
+				</Button>
+			)}
+			sx={{ zIndex: 1200 }}
+		>
+			<Router>
+				<React.StrictMode>
+					<LoaderContextProvider>
+						<UserContextProvider>
+							<ApplicationContextProvider>
+								<RoutesContextProvider>
+									<LockContextProvider>
+										<Loader />
+										<Lock />
+										<Main
+											sx={{
+												p: 0,
+												m: 0,
+											}}
+										/>
+									</LockContextProvider>
+								</RoutesContextProvider>
+							</ApplicationContextProvider>
+						</UserContextProvider>
+					</LoaderContextProvider>
+				</React.StrictMode>
+			</Router>
+		</SnackbarProvider>
+	);
 }
 
 export default App;

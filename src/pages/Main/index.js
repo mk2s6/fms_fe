@@ -7,66 +7,72 @@ import { UserContext } from '../../context/UserContext';
 import { LockContext } from '../../context/LockContext';
 import Footer from '../Partials/Footer';
 import { RoutesContext } from '../../context/RoutesContext';
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
 
-  return (
-    <Container role='tabpanel' hidden={value !== index} id={`simple-tabpanel-${index}`} aria-labelledby={`simple-tab-${index}`} {...other}>
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
-    </Container>
-  );
+function TabPanel(props) {
+	const { children, value, index, ...other } = props;
+
+	return (
+		<Container role='tabpanel' hidden={value !== index} id={`simple-tabpanel-${index}`} aria-labelledby={`simple-tab-${index}`} {...other}>
+			{value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+		</Container>
+	);
 }
 
 function Main({ routes }) {
-  const { allRoutes, _default, NoAuthAppBar } = useContext(RoutesContext);
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { loginStatus, unRegisterUser } = useContext(UserContext);
-  const { lock } = useContext(LockContext);
+	const { allRoutes, _default, NoAuthAppBar } = useContext(RoutesContext);
+	const navigate = useNavigate();
+	const location = useLocation();
+	const { loginStatus, unRegisterUser } = useContext(UserContext);
+	const { lock } = useContext(LockContext);
 
-  useEffect(() => {
-    window.onload = function () {
-      const path = localStorage.getItem('beforeReloadPath');
-      localStorage.setItem('beforeReloadPath', '');
-      navigate(path || _default[0].route);
-    };
+	useEffect(() => {
+		const path = localStorage.getItem('beforeReloadPath');
+		if (path) {
+			localStorage.setItem('beforeReloadPath', '');
+			navigate(path);
+		} else if (loginStatus) {
+			navigate(_default[0].route);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
-    window.onbeforeunload = function () {
-      localStorage.setItem('beforeReloadPath', location.pathname);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  });
+	useEffect(() => {
+		window.onbeforeunload = function () {
+			localStorage.setItem('beforeReloadPath', location.pathname);
+		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [location.pathname]);
 
-  useEffect(() => {
-    if (loginStatus && NoAuthAppBar.length && NoAuthAppBar.filter(N => N.route === location.pathname).length) navigate(NoAuthAppBar[0]);
-    if (loginStatus && location.pathname === '/signout') {
-      unRegisterUser();
-      navigate(NoAuthAppBar[0].route);
-    }
+	useEffect(() => {
+		if (loginStatus && NoAuthAppBar.length && NoAuthAppBar.filter(N => N.route === location.pathname).length) navigate(NoAuthAppBar[0]);
+		if (loginStatus && location.pathname === '/signout') {
+			unRegisterUser();
+			navigate(NoAuthAppBar[0].route);
+		}
 
-    if (!loginStatus && NoAuthAppBar.length) {
-      navigate(NoAuthAppBar[0].route);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loginStatus, NoAuthAppBar, _default]);
+		if (!loginStatus && NoAuthAppBar.length) {
+			navigate(NoAuthAppBar[0].route);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [loginStatus, NoAuthAppBar, _default]);
 
-  return (
-    <>
-      {!lock && (
-        <>
-          <Header />
-          <Routes>
-            {!!allRoutes.length &&
-              allRoutes
-                .filter(A => !A.noAuth === loginStatus)
-                .map(r => <Route component={TabPanel} key={r.id} path={r.route} index={r.id} element={r.component}></Route>)}
-            <Route path='*' element={<Navigate to={loginStatus ? _default[0]?.route || '/home' : NoAuthAppBar[0]?.route || '/signin'} />} />
-          </Routes>
-          <Footer />
-        </>
-      )}
-    </>
-  );
+	return (
+		<>
+			{!lock && (
+				<>
+					<Header />
+					<Routes>
+						{!!allRoutes.length &&
+							allRoutes
+								.filter(A => !A.noAuth === loginStatus)
+								.map(r => <Route component={TabPanel} key={r.id} path={r.route} index={r.id} element={r.component}></Route>)}
+						<Route path='*' element={<Navigate to={loginStatus ? _default[0]?.route || '/home' : NoAuthAppBar[0]?.route || '/signin'} />} />
+					</Routes>
+					<Footer />
+				</>
+			)}
+		</>
+	);
 }
 
 export default Main;

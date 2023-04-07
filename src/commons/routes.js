@@ -115,7 +115,7 @@ export const MODULES = [
 		id: 10,
 		code: 'MOD404',
 		component: <_404 />,
-		noAuth: true,
+		noAuth: false,
 		in_nav: false,
 		in_home: false,
 		in_app_bar: false,
