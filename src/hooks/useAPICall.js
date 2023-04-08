@@ -56,7 +56,7 @@ const useAPICall = (getNotification = false, loader = true) => {
 			enqueueSnackbar(err.message, {
 				variant: e?.response?.status === 422 ? 'warning' : 'error',
 			});
-
+			alert(JSON.stringify(err));
 			return Promise.reject(err);
 		}
 	};
