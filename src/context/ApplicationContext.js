@@ -66,7 +66,9 @@ export const ApplicationContextProvider = props => {
 		try {
 			await refreshModules();
 			loginStatus && (await refreshData());
-		} catch (e) {}
+		} catch (e) {
+			console.log(e);
+		}
 	};
 
 	useEffect(() => {
