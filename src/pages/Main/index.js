@@ -23,7 +23,6 @@ function Main({ routes }) {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const { loginStatus, unRegisterUser } = useContext(UserContext);
-	const { lock } = useContext(LockContext);
 
 	useEffect(() => {
 		if (loginStatus && location.pathname === '/signout') {
@@ -35,14 +34,14 @@ function Main({ routes }) {
 
 	return (
 		<>
-			{!lock && (
+			{!!allRoutes.length && (
 				<>
 					<Header />
 					<Routes>
 						{!!allRoutes.length &&
 							allRoutes
 								.filter(A => !A.noAuth === loginStatus)
-								.map(r => <Route component={TabPanel} key={r.id} path={r.route} index={r.id} element={r.component}></Route>)}
+								.map(r => <Route component={TabPanel} key={r.id} path={r.route} index={r.id} element={r.component} />)}
 						<Route path='*' element={<Navigate to={loginStatus ? _default[0]?.route || '/home' : NoAuthAppBar[0]?.route || '/signin'} />} />
 					</Routes>
 					<Footer />
