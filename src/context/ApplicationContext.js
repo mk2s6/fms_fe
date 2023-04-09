@@ -14,7 +14,7 @@ export const ApplicationContextProvider = props => {
 	// eslint-disable-next-line no-unused-vars
 	const [transactionTypes, setTransactionTypes] = useState(TRANSACTION_TYPES);
 	const { APIRequest } = useAPICall(false, false);
-	const { loginStatus } = useContext(UserContext);
+	const { loginStatus, UserContextFlag } = useContext(UserContext);
 	const loadFlags = () => ({
 		modulesLoaded: !!modules || (modules && modules?.length),
 		loginStatus,
@@ -72,9 +72,9 @@ export const ApplicationContextProvider = props => {
 	};
 
 	useEffect(() => {
-		(async () => await refreshMeta())();
+		UserContextFlag && (async () => await refreshMeta())();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [loginStatus]);
+	}, [UserContextFlag]);
 
 	return (
 		<ApplicationContext.Provider

@@ -7,6 +7,7 @@ const UserContext = createContext();
 const UserContextProvider = props => {
 	const [token, setToken] = useState('');
 	const [loginStatus, setLoginStatus] = useState(false);
+	const [UserContextFlag, setUserContextFlag] = useState(false);
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -18,6 +19,7 @@ const UserContextProvider = props => {
 			setToken(null);
 			setLoginStatus(false);
 		}
+		setUserContextFlag(true);
 	}, []);
 
 	useEffect(() => {
@@ -36,7 +38,7 @@ const UserContextProvider = props => {
 		navigate('/signin');
 	};
 
-	return <UserContext.Provider value={{ registerUser, token, loginStatus, unRegisterUser }}>{props.children}</UserContext.Provider>;
+	return <UserContext.Provider value={{ registerUser, UserContextFlag, token, loginStatus, unRegisterUser }}>{props.children}</UserContext.Provider>;
 };
 
 export { UserContext, UserContextProvider };
