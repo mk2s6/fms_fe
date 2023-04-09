@@ -34,7 +34,9 @@ export default function PaymentMethods() {
 
 	useEffect(() => {
 		(async () => {
-			await getPaymentMethods();
+			try {
+				await getPaymentMethods();
+			} catch (e) {}
 		})();
 	}, []);
 
