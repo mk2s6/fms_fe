@@ -1,51 +1,52 @@
 {
-  "name": "hms_fe",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@emotion/react": "^11.10.6",
-    "@emotion/styled": "^11.10.6",
-    "@mui/icons-material": "^5.11.9",
-    "@mui/material": "^5.11.10",
-    "@mui/x-data-grid": "^5.17.25",
-    "@mui/x-data-grid-generator": "^5.17.25",
-    "@mui/x-date-pickers": "^6.0.2",
-    "@testing-library/jest-dom": "^5.15.1",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^14.4.3",
-    "axios": "^1.1.3",
-    "moment": "^2.29.4",
-    "notistack": "^2.0.7",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.4.2",
-    "react-scripts": "^5.0.1",
-    "serve": "^13.0.2",
-    "web-vitals": "^3.0.3"
-  },
-  "scripts": {
-    "start": "serve -s build",
-    "dev": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+	"name": "hms_fe",
+	"version": "0.1.0",
+	"private": true,
+	"homepage": ".",
+	"dependencies": {
+		"@emotion/react": "^11.10.6",
+		"@emotion/styled": "^11.10.6",
+		"@mui/icons-material": "^5.11.9",
+		"@mui/material": "^5.11.10",
+		"@mui/x-data-grid": "^5.17.25",
+		"@mui/x-data-grid-generator": "^5.17.25",
+		"@mui/x-date-pickers": "^6.0.2",
+		"@testing-library/jest-dom": "^5.15.1",
+		"@testing-library/react": "^13.4.0",
+		"@testing-library/user-event": "^14.4.3",
+		"axios": "^1.1.3",
+		"moment": "^2.29.4",
+		"notistack": "^2.0.7",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"react-router-dom": "^6.4.2",
+		"react-scripts": "^5.0.1",
+		"serve": "^13.0.2",
+		"web-vitals": "^3.0.3"
+	},
+	"scripts": {
+		"start": "serve -s build",
+		"dev": "react-scripts start",
+		"build": "react-scripts build",
+		"test": "react-scripts test",
+		"eject": "react-scripts eject"
+	},
+	"eslintConfig": {
+		"extends": [
+			"react-app",
+			"react-app/jest"
+		]
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
+	}
 }
