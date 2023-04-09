@@ -14,7 +14,7 @@ function Navigation() {
 		if (location.pathname === NoAuthAppBar.route) setTab('_null');
 		else setTab(TAB || '_undefined');
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [location.pathname]);
+	}, [navRoutes, location.pathname]);
 
 	const handleChange = (_event, newTabIndex) => {
 		setTab(newTabIndex);
@@ -49,12 +49,7 @@ function Navigation() {
 							textColor='inherit'
 						>
 							<Tab key={'_null'} value={'_null'} label={''} sx={{ width: 0, height: 0, minWidth: 0, maxWidth: 0, hidden: true, p: 0 }} disabled />
-							{navRoutes &&
-								navRoutes.map(r => (
-									<Tab label={r.label} key={r.id} value={r.id} component={Link} to={r.route}>
-										<Tooltip title={r.description} arrow />
-									</Tab>
-								))}
+							{navRoutes && navRoutes.map(r => <Tab label={r.label} key={r.id} value={r.id} component={Link} to={r.route} />)}
 							<Tab
 								key={'_undefined'}
 								value={'_undefined'}
