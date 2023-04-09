@@ -8,8 +8,8 @@ import RestaurantTwoToneIcon from '@mui/icons-material/RestaurantTwoTone';
 import Registration from '../pages/Registration';
 import Transactions from '../pages/Transactions';
 import PaymentMethods from '../pages/PaymentMethods';
-import Lendings from '../pages/Lendings';
 import _404 from '../pages/404';
+import ComingSoon from '../pages/ComingSoon';
 
 export const MODULES = [
 	{
@@ -57,7 +57,7 @@ export const MODULES = [
 	{
 		id: 5,
 		code: 'MODLED',
-		component: <Transactions />,
+		component: <ComingSoon />,
 		noAuth: false,
 		in_nav: true,
 		in_home: true,
@@ -66,7 +66,7 @@ export const MODULES = [
 	{
 		id: 6,
 		code: 'MODDBD',
-		component: <Profile />,
+		component: <ComingSoon />,
 		noAuth: false,
 		in_nav: true,
 		in_home: false,
@@ -105,7 +105,7 @@ export const MODULES = [
 	{
 		id: 9,
 		code: 'MODLEN',
-		component: <Lendings />,
+		component: <ComingSoon />,
 		noAuth: false,
 		in_nav: true,
 		in_home: true,
