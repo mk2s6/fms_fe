@@ -74,7 +74,7 @@ export const ApplicationContextProvider = props => {
 	useEffect(() => {
 		UserContextFlag && (async () => await refreshMeta())();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [UserContextFlag]);
+	}, [UserContextFlag, loginStatus]);
 
 	return (
 		<ApplicationContext.Provider

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const UserContext = createContext();
 
 const UserContextProvider = props => {
-	const [token, setToken] = useState('');
+	const [token, setToken] = useState(undefined);
 	const [loginStatus, setLoginStatus] = useState(false);
 	const [UserContextFlag, setUserContextFlag] = useState(false);
 	const navigate = useNavigate();
@@ -19,8 +19,11 @@ const UserContextProvider = props => {
 			setToken(null);
 			setLoginStatus(false);
 		}
-		setUserContextFlag(true);
 	}, []);
+
+	useEffect(() => {
+		token !== undefined && setUserContextFlag(true);
+	}, [token]);
 
 	useEffect(() => {
 		if (token) setLoginStatus(true);
