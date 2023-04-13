@@ -33,6 +33,7 @@ const UserContextProvider = props => {
 	const registerUser = (data, _token) => {
 		localStorage.setItem('token', _token);
 		setToken(_token);
+		navigate('/home');
 	};
 
 	const unRegisterUser = () => {
