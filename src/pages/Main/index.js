@@ -42,7 +42,7 @@ function Main({ ...props }) {
 							allRoutes
 								.filter(A => !A.noAuth === loginStatus)
 								.map(r => <Route component={TabPanel} key={r.id} path={r.route} index={r.id} element={r.component} />)}
-						<Route path='*' element={<Navigate to={'/404'} />} />
+						<Route path='*' element={<Navigate to={allRoutes[0].route} />} />
 					</Routes>
 					<Footer />
 				</>
