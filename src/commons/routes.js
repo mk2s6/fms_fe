@@ -10,6 +10,7 @@ import Transactions from '../pages/Transactions';
 import PaymentMethods from '../pages/PaymentMethods';
 import _404 from '../pages/404';
 import ComingSoon from '../pages/ComingSoon';
+import Lendings from '../pages/Lendings';
 
 export const MODULES = [
 	{
@@ -105,7 +106,7 @@ export const MODULES = [
 	{
 		id: 9,
 		code: 'MODLEN',
-		component: <ComingSoon />,
+		component: <Lendings />,
 		noAuth: false,
 		in_nav: true,
 		in_home: true,

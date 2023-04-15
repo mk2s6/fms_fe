@@ -88,6 +88,12 @@ export const GET_LENDINGS_LIST = ({ page_no, limit, ledger, parent_transaction, 
 	url: `/lendings`,
 	method: 'get',
 });
+
+export const GET_ACTIVE_LENDINGS = ({ page_no, limit, ledger, parent_transaction, lending }) => ({
+	url: `/lendings?status=1`,
+	method: 'get',
+});
+
 export const GET_LENDINGS_DETAILS = ({ id }) => ({ url: `/lendings/${id}`, method: 'get' });
 
 // --------------------------------------------------------------------

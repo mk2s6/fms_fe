@@ -1,27 +1,28 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { AddCircleTwoTone, EditTwoTone, VisibilityTwoTone } from '@mui/icons-material';
-import { Card, CardActions, CardContent, Container, Grid, Tooltip, Typography } from '@mui/material';
+import { ButtonGroup, Card, CardActions, CardContent, Container, Grid, Tooltip, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
-import PaymentMethodAddUpdateForm from '../../components/PaymentMethods/PaymentMethodAddUpdateForm';
-import PaymentMethodCard from '../../components/PaymentMethods/PaymentMethodCard';
 import { Btn } from '../../components/System/Inputs';
 import SpeedDialInput from '../../components/System/SpeedDialInput';
 import useAPICall from '../../hooks/useAPICall';
 import { generateKeysFromObjects } from '../../utils';
+import LendingCard from '../../components/Lendings/LendingsCard';
+import LendingsAddUpdateForm from '../../components/Lendings/LendingsAddUpdateForm';
 
 export default function Lendings() {
 	const [clickType, setClickType] = useState('');
+	const [settlementFilter, setSettlementFilter] = useState('');
 
 	const { APIRequest } = useAPICall(false);
-	const [paymentMethods, setPaymentMethods] = useState([]);
+	const [activeLendings, setActiveLendings] = useState([]);
 	const [updateData, setUpdateData] = useState({});
 
 	const [reload, setReload] = useState(false);
 
-	const getPaymentMethods = async () => {
+	const getActiveLendings = async () => {
 		try {
-			const { data } = await APIRequest('GET_PAYMENT_METHODS_LIST');
-			setPaymentMethods(data);
+			const { data } = await APIRequest('GET_ACTIVE_LENDINGS');
+			setActiveLendings(data);
 		} catch (e) {}
 	};
 
@@ -31,20 +32,6 @@ export default function Lendings() {
 			setClickType(to);
 			reload && setReload(reload);
 		};
-
-	useEffect(() => {
-		(async () => {
-			await getPaymentMethods();
-		})();
-	}, []);
-
-	useEffect(() => {
-		reload &&
-			(async () => {
-				await getPaymentMethods();
-				setReload(false);
-			})();
-	}, [reload]);
 
 	const toolTopActions = [
 		{
@@ -62,7 +49,11 @@ export default function Lendings() {
 		setUpdateData(data);
 	};
 
-	const paymentMethodActions = [
+	const handleSettlementStatus = type => () => {
+		setSettlementFilter(type);
+	};
+
+	const lendingActions = [
 		{
 			key: 'VIEW',
 			icon: <VisibilityTwoTone />,
@@ -78,8 +69,8 @@ export default function Lendings() {
 	];
 
 	const APICalls = {
-		CREATE: 'ADD_PAYMENT_METHOD',
-		UPDATE: 'UPDATE_PAYMENT_METHOD',
+		CREATE: 'ADD_LENDING',
+		UPDATE: 'UPDATE_LENDING',
 		VIEW: '',
 	};
 
@@ -87,13 +78,55 @@ export default function Lendings() {
 		setClickType('UPDATE');
 	};
 
+	const SettlementTypes = [
+		{
+			key: 'UN-SETTLED',
+			text: 'UN SETTLED',
+			toolTip: 'Not Settled Transactions',
+			action: handleSettlementStatus('UN-SETTLED'),
+		},
+		{
+			key: 'SETTLED',
+			text: 'SETTLED',
+			toolTip: 'Settled Transactions',
+			action: handleSettlementStatus('SETTLED'),
+		},
+	];
+
 	const api = () => APICalls[clickType];
+
+	useEffect(() => {
+		(async () => {
+			await getActiveLendings();
+			setSettlementFilter(SettlementTypes[0].key);
+		})();
+	}, []);
+
+	useEffect(() => {
+		reload &&
+			(async () => {
+				await getActiveLendings();
+				setReload(false);
+			})();
+	}, [reload]);
 
 	return (
 		<>
-			<Container maxWidth='xl' sx={{ mt: 0 }} component='main'>
-				<Grid container justifyContent='center' spacing={2} sx={{ mt: 0.3, p: 1, flexGrow: 1 }}>
-					{paymentMethods.length === 0 && (
+			<Container maxWidth='xl' sx={{ mt: 1 }} component='main'>
+				{activeLendings.length && (
+					<Grid container justifyContent='center' spacing={2} sx={{ mt: 2 }}>
+						<ButtonGroup>
+							{SettlementTypes.map(types => (
+								<Btn key={types.key} onClick={types.action} disabled={types.key === settlementFilter}>
+									{types.text}
+								</Btn>
+							))}
+						</ButtonGroup>
+					</Grid>
+				)}
+
+				<Grid container justifyContent='center' spacing={2} sx={{ mt: 0, p: 0.5 }}>
+					{activeLendings.length === 0 && (
 						<Grid item xs={12} sm={12} md={4} lg={3} xl={3} variant='button' underline='none'>
 							<Card sx={{ minHeight: 100 }} color='secondary' variant='elevation' elevation={16}>
 								<CardContent>
@@ -112,14 +145,14 @@ export default function Lendings() {
 						</Grid>
 					)}
 
-					{paymentMethods.length > 0 &&
-						paymentMethods.map(pm => {
-							return <PaymentMethodCard key={generateKeysFromObjects(pm)} actions={paymentMethodActions} data={pm} />;
+					{activeLendings.length > 0 &&
+						activeLendings.map(pm => {
+							return <LendingCard key={generateKeysFromObjects(pm)} actions={lendingActions} data={pm} />;
 						})}
 				</Grid>
 
 				{!!clickType && (
-					<PaymentMethodAddUpdateForm
+					<LendingsAddUpdateForm
 						data={updateData}
 						api={api()}
 						label={'Menu-Category-Add-Update-Form'}
