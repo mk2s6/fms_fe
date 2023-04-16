@@ -191,9 +191,7 @@ export default function TransactionsAddUpdateForm({ data, api, formItems, displa
 													? paymentMethods
 															.filter(
 																I =>
-																	(['CHEQUE', 'IMPS', 'RTGS', 'NEFT', 'UPI', 'WIRE-TRANSFER', 'ONLINE'].includes(
-																		transactionMode,
-																	)
+																	(['CHEQUE', 'IMPS', 'RTGS', 'NEFT', 'UPI', 'WIRE-TRANSFER', 'ONLINE'].includes(transactionMode)
 																		? I.type === 'BANK ACCOUNT'
 																		: false) || I.type === transactionMode,
 															)
@@ -264,15 +262,7 @@ export default function TransactionsAddUpdateForm({ data, api, formItems, displa
 									</Grid>
 
 									<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-										<TextBox
-											id='amount'
-											label='Amount'
-											type='text'
-											value={amount}
-											{...bindAmount}
-											required
-											disabled={disabledStatus}
-										/>
+										<TextBox id='amount' label='Amount' type='text' value={amount} {...bindAmount} required disabled={disabledStatus} />
 									</Grid>
 
 									<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
@@ -287,14 +277,7 @@ export default function TransactionsAddUpdateForm({ data, api, formItems, displa
 									</Grid>
 
 									<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-										<TextBox
-											id='ref-no'
-											label='Transaction Reference'
-											type='text'
-											value={refNo}
-											{...bindRefNo}
-											disabled={disabledStatus}
-										/>
+										<TextBox id='ref-no' label='Transaction Reference' type='text' value={refNo} {...bindRefNo} disabled={disabledStatus} />
 									</Grid>
 
 									{/* <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>

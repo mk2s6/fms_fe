@@ -1,61 +1,120 @@
-import { Fade, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Grid, Divider } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { Fade, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Grid, Typography } from '@mui/material';
+import { useContext, useEffect, useState } from 'react';
 import useInput from '../../hooks/useInput';
-import { checkErrors, PAYMENT_METHOD_TYPES, validatePaymentMethodTypes, validateString } from '../../utils/validations';
+import { checkErrors, isValidEmail, validateAmount, validateString, validateTransactionCategories } from '../../utils/validations';
 import { Btn, SelectDropDown, TextBox } from '../System/Inputs';
 import { useSnackbar } from 'notistack';
 import useAPICall from '../../hooks/useAPICall';
 import useValidations from '../../hooks/useValidations';
 import SwitchInput from '../System/Inputs/SwitchInput';
 import { EditTwoTone } from '@mui/icons-material';
+import { ApplicationContext } from '../../context/ApplicationContext';
+import DateTime from '../System/Inputs/DateTime';
+import { formatLocalToUTC, formatUTCToLocal } from '../../utils/dates';
 
-export default function LendingsAddUpdateForm({ data, api, formItems, display, mode, setDisplay, label, updateToggle, ...props }) {
+export default function LendingsAddUpdateForm({ _data, displayAPI, api, formItems, display, mode, setDisplay, label, updateToggle, ...props }) {
 	const { enqueueSnackbar } = useSnackbar();
 	const { setValidations } = useValidations();
 	const { APIRequest } = useAPICall(true);
+	const { transactionCategories, currencyCodes, transactionModes } = useContext(ApplicationContext);
 
-	const [modal, setModal] = useState(display);
-
-	const [name, bindName, nameValidations] = useInput('', null, 'Please provide a valid category of 3 to 50 characters.!', validateString(3, 50));
-	const [type, bindType, typeValidations] = useInput('', null, 'Please provide a valid payment method type.!', validatePaymentMethodTypes);
-	const [last4Digits, bindLast4Digits, last4DigitsValidations] = useInput(
+	const [purpose, bindPurpose, purposeValidations] = useInput(
 		'',
 		null,
-		'Please provide a valid last 4 characters for the payment method.!',
-		validateString(4, 4),
+		'Please provide a valid category of 3 to 50 characters.!',
+		validateString(3, 50),
+	);
+	const [details, bindDetails, detailsValidations] = useInput(
+		'',
+		null,
+		'Please provide a valid category of 3 to 50 characters.!',
+		validateString(3, 50),
+	);
+	const [toName, bindToName, toNameValidations] = useInput('', null, 'Please provide a valid name to proceed!', validateString(3, 50));
+	const [toPhone, bindToPhone, toPhoneValidations] = useInput('', null, 'Please provide a valid phone number!', validateString(10, 15));
+	const [toEmail, bindToEmail, toEmailValidations] = useInput('', null, 'Please provide a valid email.!', isValidEmail);
+
+	const [transactionMode, bindTransactionMode, transactionModeValidations] = useInput('', null, 'Please provide a valid transaction mode.!');
+	const [amount, bindAmount, amountValidations] = useInput('', null, 'Please provide a valid amount.!', validateAmount);
+	const [currencyCode, bindCurrencyCode, currencyCodeValidations] = useInput('INR', null, 'Please provide a valid currency code.!');
+
+	const [transactionCategory, bindTransactionCategory, transactionCategoryValidations] = useInput(
+		[],
+		null,
+		'Please provide a valid transaction category.!',
+		validateTransactionCategories,
 	);
 
-	const [active, bindActive, activeValidations] = useInput('', 2);
+	const [borrowingStatus, bindBorrowingStatus, borrowingStatusValidations] = useInput(false, 2);
+	const [transactionDate, bindTransactionDate, transactionDateValidations] = useInput('', 4, 'Please provide a valid transactionDate.!');
 
-	const [pmId, bindPMId] = useState(null);
+	const [lendingId, bindLendingId] = useState(null);
 	const [updateStatus, setUpdateStatus] = useState(false);
 
 	const disabledStatus = mode === 'VIEW';
 
 	const validationFields = {
-		name: nameValidations,
-		type: typeValidations,
-		last4Digit: last4DigitsValidations,
-		active: activeValidations,
+		purpose: purposeValidations,
+		details: detailsValidations,
+		isBorrowed: borrowingStatusValidations,
+		category: transactionCategoryValidations,
+		amount: amountValidations,
+		currencyCode: currencyCodeValidations,
+		onDate: transactionDateValidations,
+		mode: transactionModeValidations,
+		toPhone: toPhoneValidations,
+		toEmail: toEmailValidations,
+		toName: toNameValidations,
 	};
 
-	const setDefaultData = () => {
-		bindPMId(data.id);
-		bindName.SetDefaultValue(data.name);
-		bindType.SetDefaultValue(data.type);
-		bindLast4Digits.SetDefaultValue(data.last4Digits);
-		bindActive.SetDefaultValue(data.active);
+	const setDefaultData = data => {
+		console.log(data);
+		bindLendingId(data.id);
+		bindPurpose.SetDefaultValue(data.purpose);
+		bindDetails.SetDefaultValue(data.details);
+		bindToEmail.SetDefaultValue(data.toEmail);
+		bindToPhone.SetDefaultValue(data.toPhone);
+		bindToName.SetDefaultValue(data.toName);
+		bindTransactionCategory.SetDefaultValue(data.category);
+		bindTransactionMode.SetDefaultValue(data.mode);
+		bindCurrencyCode.SetDefaultValue(data.currencyCode);
+		bindAmount.SetDefaultValue(data.amount);
+		bindBorrowingStatus.SetDefaultValue(data.borrowingStatus);
+		bindTransactionDate.SetDefaultValue(formatUTCToLocal(data.onDate));
 	};
 
-	const inputFields = [bindName, bindType, bindLast4Digits];
+	const inputFields = [
+		bindPurpose,
+		bindDetails,
+		bindAmount,
+		bindCurrencyCode,
+		bindToEmail,
+		bindToName,
+		bindToPhone,
+		bindTransactionCategory,
+		bindTransactionDate,
+		bindTransactionMode,
+		bindBorrowingStatus,
+	];
+
+	const getDetails = async () => {
+		if (displayAPI) {
+			const {
+				data: [__],
+			} = await APIRequest(displayAPI, { id: _data.id });
+			console.log(__);
+			setDefaultData(__);
+		} else {
+			setDefaultData(_data);
+		}
+	};
 
 	useEffect(() => {
-		mode && (mode === 'UPDATE' || mode === 'VIEW') && setDefaultData();
+		(async () => (mode === 'UPDATE' || mode === 'VIEW') && (await getDetails()))();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [mode]);
+	}, []);
 
 	const handleModalClose = reload => () => {
-		setModal(false);
 		setDisplay('')(reload && mode !== 'VIEW');
 	};
 
@@ -74,10 +133,18 @@ export default function LendingsAddUpdateForm({ data, api, formItems, display, m
 		if (mode === 'VIEW') return;
 
 		const reqData = {
-			id: mode === 'UPDATE' ? pmId : null,
-			name,
-			type,
-			last4Digits,
+			id: mode === 'UPDATE' ? lendingId : null,
+			purpose,
+			details,
+			toName,
+			toEmail,
+			toPhone,
+			category: transactionCategory,
+			onDate: formatLocalToUTC(transactionDate.format()),
+			mode: transactionMode,
+			currencyCode,
+			amount,
+			isBorrowed: borrowingStatus,
 		};
 		try {
 			await APIRequest(api, reqData);
@@ -90,7 +157,7 @@ export default function LendingsAddUpdateForm({ data, api, formItems, display, m
 	};
 
 	const toggleStatusChange = async () => {
-		if (checkErrors([bindActive])) {
+		if (checkErrors([bindBorrowingStatus])) {
 			enqueueSnackbar('Please Fix validation errors to proceed.!', {
 				variant: 'warning',
 			});
@@ -100,8 +167,8 @@ export default function LendingsAddUpdateForm({ data, api, formItems, display, m
 		if (mode === 'VIEW') return;
 
 		const reqData = {
-			id: mode === 'UPDATE' ? pmId : null,
-			active,
+			id: mode === 'UPDATE' ? lendingId : null,
+			borrowingStatus,
 		};
 		try {
 			await APIRequest('TOGGLE_PAYMENT_METHOD_STATUS', reqData);
@@ -113,17 +180,18 @@ export default function LendingsAddUpdateForm({ data, api, formItems, display, m
 	};
 
 	useEffect(() => {
-		updateStatus &&
+		mode === 'UPDATE' &&
+			updateStatus &&
 			(async () => {
 				await toggleStatusChange();
 				setUpdateStatus(false);
 			})();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [updateStatus, active]);
+	}, [updateStatus, borrowingStatus]);
 
 	return (
 		<>
-			<Dialog maxWidth='sm' fullWidth open={modal} onClose={handleModalClose(false)} TransitionComponent={Fade}>
+			<Dialog maxWidth='sm' fullWidth open={display} onClose={handleModalClose(false)} TransitionComponent={Fade} sx={{ p: 0, m: 0 }}>
 				<form
 					onSubmit={e => {
 						e.preventDefault();
@@ -132,53 +200,138 @@ export default function LendingsAddUpdateForm({ data, api, formItems, display, m
 				>
 					{mode !== 'BULK_CREATE' ? (
 						<>
-							<DialogTitle sx={{ textAlign: 'center', textTransform: 'uppercase' }}>Menu Category - {mode}</DialogTitle>
-							<Divider sx={{ ml: 2, mr: 2 }} />
-							<DialogContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-								<Grid container spacing={2} sx={{ p: 0.5 }}>
+							<DialogTitle sx={{ textAlign: 'center', fontSize: 16, p: 1, pb: 0 }} component={Typography} variant='button'>
+								{borrowingStatus ? 'Borrowing Details' : 'Loaning Details'}
+							</DialogTitle>
+							<DialogContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', p: 1 }}>
+								<Grid container spacing={2} sx={{ pt: 1 }}>
 									<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-										<TextBox id='name' label='Payment Method Name' type='text' value={name} {...bindName} required disabled={disabledStatus} />
+										<TextBox id='purpose' label='Purpose' type='text' value={purpose} {...bindPurpose} required disabled={disabledStatus} />
 									</Grid>
 									<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+										<TextBox id='details' label='Details' type='text' value={details} {...bindDetails} required disabled={disabledStatus} />
+									</Grid>
+
+									<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+										<TextBox
+											id='name'
+											label={borrowingStatus ? 'Borrowing from' : 'Loaned to'}
+											type='text'
+											value={toName}
+											{...bindToName}
+											required
+											disabled={disabledStatus}
+										/>
+									</Grid>
+
+									<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
 										<SelectDropDown
-											id='type'
-											label={'Payment Method Type'}
-											items={PAYMENT_METHOD_TYPES.map(I => ({ id: I, value: I }))}
-											value={type}
+											id='Borrowing-category'
+											label={`${borrowingStatus ? 'Borrowing for' : 'Loaned to'} category`}
+											items={transactionCategories.map(I => ({
+												id: I,
+												value: I,
+											}))}
+											value={transactionCategory}
 											required
 											disabled={disabledStatus}
 											readOnly={disabledStatus}
 											fullWidth
-											{...bindType}
+											{...bindTransactionCategory}
 										/>
 									</Grid>
-									<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+
+									<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
 										<TextBox
-											id='last4Digits'
-											label='Payment Method last 4 Digits'
+											id='toEmail'
+											label={`${borrowingStatus ? 'Borrowing from' : 'Loaned to'} Email`}
 											type='text'
-											value={last4Digits}
-											{...bindLast4Digits}
+											value={toEmail}
+											{...bindToEmail}
 											required
 											disabled={disabledStatus}
 										/>
 									</Grid>
-									<Grid item xs={12} sm={12} md={12} lg={12} xl={12} alignItems='center' justifyContent='center'>
-										<SwitchInput
-											id='setActive'
-											label={active ? 'Active Payment Method' : 'In-Active Payment Method'}
-											{...bindActive}
+									<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+										<TextBox
+											id='toPhone'
+											label={`${borrowingStatus ? 'Borrowing from' : 'Loaned to'} Phone`}
+											type='text'
+											value={toPhone}
+											{...bindToPhone}
+											required
 											disabled={disabledStatus}
-											onChange={async e => {
-												bindActive.onChange(e);
-												setUpdateStatus(true);
-											}}
+										/>
+									</Grid>
+
+									<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+										<SelectDropDown
+											id='transaction-currency-code'
+											label={'Currency Code'}
+											items={currencyCodes.map(I => ({
+												value: `${I.currency}-${I.country}`,
+												id: I.currency,
+											}))}
+											value={currencyCode}
+											required
+											disabled={disabledStatus}
+											readOnly={disabledStatus}
+											fullWidth
+											{...bindCurrencyCode}
+										/>
+									</Grid>
+
+									<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+										<TextBox id='amount' label='Amount' type='text' value={amount} {...bindAmount} required disabled={disabledStatus} />
+									</Grid>
+
+									<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+										<SelectDropDown
+											id='transaction-mode'
+											label={'Transaction Mode'}
+											items={transactionModes.map(I => ({
+												id: I,
+												value: I,
+											}))}
+											value={transactionMode}
+											required
+											disabled={disabledStatus}
+											readOnly={disabledStatus}
+											fullWidth
+											{...bindTransactionMode}
+										/>
+									</Grid>
+
+									<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+										<DateTime
+											id='transaction-date'
+											label='Transaction Date'
+											value={transactionDate}
+											{...bindTransactionDate}
+											required
+											disabled={disabledStatus}
 										/>
 									</Grid>
 								</Grid>
 							</DialogContent>
 							<DialogActions>
-								<Btn onClick={handleModalClose(true)}>close</Btn>
+								<Grid item xs={12} sm={12} md={12} lg={12} xl={12} alignItems='center' justifyContent='center'>
+									<SwitchInput
+										id='setActive'
+										sx={{ mr: 2 }}
+										label={borrowingStatus ? 'Is Being Borrowed.!!' : 'Is Being Loaned.!!'}
+										labelPlacement='start'
+										{...bindBorrowingStatus}
+										disabled={disabledStatus}
+										onChange={async e => {
+											bindBorrowingStatus.onChange(e);
+											if (mode === 'UPDATE') {
+												setUpdateStatus(true);
+											}
+										}}
+									/>
+								</Grid>
+								<Btn onClick={handleModalClose(false)}>close</Btn>
 								<Btn id={'payment-method-submit'} sx={{ display: mode === 'VIEW' ? 'none' : 'initial' }} type='submit' disabled={disabledStatus}>
 									{mode}
 								</Btn>

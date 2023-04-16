@@ -71,7 +71,7 @@ export default function Lendings() {
 	const APICalls = {
 		CREATE: 'ADD_LENDING',
 		UPDATE: 'UPDATE_LENDING',
-		VIEW: '',
+		VIEW: 'GET_LENDINGS_DETAILS',
 	};
 
 	const updateToggle = () => {
@@ -153,8 +153,9 @@ export default function Lendings() {
 
 				{!!clickType && (
 					<LendingsAddUpdateForm
-						data={updateData}
+						_data={updateData}
 						api={api()}
+						displayAPI={APICalls.VIEW}
 						label={'Menu-Category-Add-Update-Form'}
 						setDisplay={setDisplay}
 						display={!!clickType}

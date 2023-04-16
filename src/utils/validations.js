@@ -12,6 +12,10 @@ export function validateString(min = 1, max = Infinity) {
 	return value => value.length >= min && value.length <= max;
 }
 
+export function isValidEmail(email) {
+	return /\S+@\S+\.\S+/.test(email);
+}
+
 export function validateMultiSelectValues(min = 1, max = Infinity) {
 	return value => value.length >= min && value.length <= max;
 }

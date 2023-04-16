@@ -89,7 +89,19 @@ export const GET_LENDINGS_LIST = ({ page_no, limit, ledger, parent_transaction, 
 	method: 'get',
 });
 
-export const GET_ACTIVE_LENDINGS = ({ page_no, limit, ledger, parent_transaction, lending }) => ({
+export const ADD_LENDING = ({ ...body }) => ({
+	url: `/lendings`,
+	method: 'post',
+	body,
+});
+
+export const UPDATE_LENDING = ({ id, ...body }) => ({
+	url: `/lendings/${id}`,
+	method: 'put',
+	body,
+});
+
+export const GET_ACTIVE_LENDINGS = ({ settlement }) => ({
 	url: `/lendings?status=1`,
 	method: 'get',
 });
@@ -106,11 +118,11 @@ export const GET_PAYMENT_METHODS_LIST = ({ page_no = 1, limit = 10 }) => ({
 	method: 'get',
 });
 export const GET_PAYMENT_METHOD_DETAILS = ({ id }) => ({ url: `/payment-methods/${id}`, method: 'get' });
-export const ADD_PAYMENT_METHOD = ({ name, type, last4Digits }) => ({ url: `/payment-methods`, method: 'post', body: { name, type, last4Digits } });
-export const UPDATE_PAYMENT_METHOD = ({ name, type, last4Digits, id }) => ({
+export const ADD_PAYMENT_METHOD = ({ ...body }) => ({ url: `/payment-methods`, method: 'post', body });
+export const UPDATE_PAYMENT_METHOD = ({ id, ...body }) => ({
 	url: `/payment-methods/${id}`,
 	method: 'put',
-	body: { name, type, last4Digits },
+	body,
 });
 export const DELETE_PAYMENT_METHOD = ({ id }) => ({
 	url: `/payment-methods/${id}`,

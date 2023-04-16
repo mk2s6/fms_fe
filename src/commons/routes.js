@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-pascal-case */
 import Home from '../pages/Home';
 import Profile from '../pages/EmployeeProfile';
 import Login from '../pages/Login';

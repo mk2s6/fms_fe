@@ -1,27 +1,9 @@
 import { Card, CardActions, CardContent, CardHeader, Grid, Tooltip, Typography } from '@mui/material';
 import { Btn } from '../System/Inputs';
 import { useState } from 'react';
-import {
-	AccountBalanceTwoTone,
-	CheckCircleTwoTone,
-	CreditCardTwoTone,
-	DeleteForeverTwoTone,
-	LocalGroceryStoreSharp,
-	PaymentTwoTone,
-	RemoveCircleTwoTone,
-	WalletTwoTone,
-} from '@mui/icons-material';
+
 import { getCurrencyForListFormat } from '../../utils';
 import { formatDisplayDate } from '../../commons/dates';
-
-const TYPE_ICONS = {
-	'CREDIT CARD': <CreditCardTwoTone sx={{ fontSize: '26px' }} />,
-	'DEBIT CARD': <CreditCardTwoTone sx={{ fontSize: '26px' }} />,
-	'BANK ACCOUNT': <AccountBalanceTwoTone sx={{ fontSize: '26px' }} />,
-	WALLET: <WalletTwoTone sx={{ fontSize: '26px' }} />,
-	'GROCERY CARD': <LocalGroceryStoreSharp sx={{ fontSize: '26px' }} />,
-	'FOOD CARD': <PaymentTwoTone sx={{ fontSize: '26px' }} />,
-};
 
 export default function LendingCard({ data, actions, ...props }) {
 	const [lending] = useState(data || {});
