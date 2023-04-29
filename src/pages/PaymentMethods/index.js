@@ -124,7 +124,7 @@ export default function PaymentMethods() {
 					<PaymentMethodAddUpdateForm
 						data={updateData}
 						api={api()}
-						label={'Menu-Category-Add-Update-Form'}
+						label={'Payment-Method-Add-Update-Form'}
 						setDisplay={setDisplay}
 						display={!!clickType}
 						mode={clickType}

@@ -132,20 +132,12 @@ export default function PaymentMethodAddUpdateForm({ data, api, formItems, displ
 				>
 					{mode !== 'BULK_CREATE' ? (
 						<>
-							<DialogTitle sx={{ textAlign: 'center', textTransform: 'uppercase' }}>Menu Category - {mode}</DialogTitle>
+							<DialogTitle sx={{ textAlign: 'center', textTransform: 'uppercase' }}>Payment Method - {mode}</DialogTitle>
 							<Divider sx={{ ml: 2, mr: 2 }} />
 							<DialogContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 								<Grid container spacing={2} sx={{ p: 0.5 }}>
 									<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-										<TextBox
-											id='name'
-											label='Payment Method Name'
-											type='text'
-											value={name}
-											{...bindName}
-											required
-											disabled={disabledStatus}
-										/>
+										<TextBox id='name' label='Payment Method Name' type='text' value={name} {...bindName} required disabled={disabledStatus} />
 									</Grid>
 									<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
 										<SelectDropDown
@@ -187,12 +179,7 @@ export default function PaymentMethodAddUpdateForm({ data, api, formItems, displ
 							</DialogContent>
 							<DialogActions>
 								<Btn onClick={handleModalClose(true)}>close</Btn>
-								<Btn
-									id={'payment-method-submit'}
-									sx={{ display: mode === 'VIEW' ? 'none' : 'initial' }}
-									type='submit'
-									disabled={disabledStatus}
-								>
+								<Btn id={'payment-method-submit'} sx={{ display: mode === 'VIEW' ? 'none' : 'initial' }} type='submit' disabled={disabledStatus}>
 									{mode}
 								</Btn>
 								{mode === 'VIEW' && (
