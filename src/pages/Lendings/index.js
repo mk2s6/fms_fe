@@ -37,7 +37,7 @@ export default function Lendings() {
 		{
 			key: 'CREATE',
 			icon: <AddCircleTwoTone />,
-			toolTip: 'Add Payment Method',
+			toolTip: 'Add Credit/Lending',
 			action: () => {
 				setClickType('CREATE');
 			},
@@ -116,11 +116,14 @@ export default function Lendings() {
 				{activeLendings.length && (
 					<Grid container justifyContent='center' spacing={2} sx={{ mt: 2 }}>
 						<ButtonGroup>
-							{SettlementTypes.map(types => (
-								<Btn key={types.key} onClick={types.action} disabled={types.key === settlementFilter}>
-									{types.text}
-								</Btn>
-							))}
+							{SettlementTypes.map(types => {
+								const disabled = types.key === settlementFilter;
+								return (
+									<Btn key={types.key} onClick={types.action} disabled={disabled} sx={disabled ? { color: '#888!important' } : {}}>
+										{types.text}
+									</Btn>
+								);
+							})}
 						</ButtonGroup>
 					</Grid>
 				)}
@@ -164,7 +167,7 @@ export default function Lendings() {
 					/>
 				)}
 			</Container>
-			<SpeedDialInput actions={toolTopActions} ariaLabel='Create Payment Method' />
+			<SpeedDialInput actions={toolTopActions} ariaLabel='Add Credit/Lending' />
 		</>
 	);
 }
