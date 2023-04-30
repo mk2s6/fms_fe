@@ -171,7 +171,7 @@ export default function LendingsAddUpdateForm({ _data, displayAPI, api, formItem
 			borrowingStatus,
 		};
 		try {
-			await APIRequest('TOGGLE_PAYMENT_METHOD_STATUS', reqData);
+			await APIRequest('UPDATE_LENDING', reqData);
 		} catch (e) {
 			if (e.type === 0 && e.errors.length) {
 				setValidations(validationFields, e.errors);
@@ -179,15 +179,6 @@ export default function LendingsAddUpdateForm({ _data, displayAPI, api, formItem
 		}
 	};
 
-	useEffect(() => {
-		mode === 'UPDATE' &&
-			updateStatus &&
-			(async () => {
-				await toggleStatusChange();
-				setUpdateStatus(false);
-			})();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [updateStatus, borrowingStatus]);
 
 	return (
 		<>

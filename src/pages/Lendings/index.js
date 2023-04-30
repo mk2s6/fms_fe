@@ -113,7 +113,7 @@ export default function Lendings() {
 	return (
 		<>
 			<Container maxWidth='xl' sx={{ mt: 1 }} component='main'>
-				{activeLendings.length && (
+				{activeLendings.length && false && (
 					<Grid container justifyContent='center' spacing={2} sx={{ mt: 2 }}>
 						<ButtonGroup>
 							{SettlementTypes.map(types => {
