@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { AddCircleTwoTone, EditTwoTone, VisibilityTwoTone } from '@mui/icons-material';
+import { AddCircleTwoTone, CurrencyExchangeTwoTone, DeleteForeverTwoTone, EditTwoTone, VisibilityTwoTone } from '@mui/icons-material';
 import { ButtonGroup, Card, CardActions, CardContent, Container, Grid, Tooltip, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Btn } from '../../components/System/Inputs';
@@ -23,6 +23,20 @@ export default function Lendings() {
 		try {
 			const { data } = await APIRequest('GET_ACTIVE_LENDINGS');
 			setActiveLendings(data);
+		} catch (e) {}
+	};
+
+	const deleteLending = lending => async () => {
+		try {
+			await APIRequest('DELETE_LENDING', { id: lending.id });
+			setReload(true);
+		} catch (e) {}
+	};
+
+	const settleLending = lending => async () => {
+		try {
+			await APIRequest('SETTLE_LENDING', { id: lending.id });
+			setReload(true);
 		} catch (e) {}
 	};
 
@@ -54,6 +68,19 @@ export default function Lendings() {
 	};
 
 	const lendingActions = [
+		{
+			key: 'DELETE',
+			icon: <DeleteForeverTwoTone />,
+			toolTip: 'Delete',
+			action: deleteLending,
+			props: { disabled: false },
+		},
+		{
+			key: 'SETTLE',
+			icon: <CurrencyExchangeTwoTone />,
+			toolTip: 'Settle',
+			action: settleLending,
+		},
 		{
 			key: 'VIEW',
 			icon: <VisibilityTwoTone />,

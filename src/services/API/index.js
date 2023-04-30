@@ -101,6 +101,19 @@ export const UPDATE_LENDING = ({ id, ...body }) => ({
 	body,
 });
 
+
+export const DELETE_LENDING = ({ id }) => ({
+	url: `/lendings/${id}`,
+	method: 'delete',
+});
+
+export const SETTLE_LENDING = ({ id }) => ({
+	url: `/lendings/settle/${id}`,
+	method: 'put',
+});
+
+
+
 export const GET_ACTIVE_LENDINGS = ({ settlement }) => ({
 	url: `/lendings?status=1`,
 	method: 'get',

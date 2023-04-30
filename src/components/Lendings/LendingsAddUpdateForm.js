@@ -156,29 +156,6 @@ export default function LendingsAddUpdateForm({ _data, displayAPI, api, formItem
 		}
 	};
 
-	const toggleStatusChange = async () => {
-		if (checkErrors([bindBorrowingStatus])) {
-			enqueueSnackbar('Please Fix validation errors to proceed.!', {
-				variant: 'warning',
-			});
-			return;
-		}
-
-		if (mode === 'VIEW') return;
-
-		const reqData = {
-			id: mode === 'UPDATE' ? lendingId : null,
-			borrowingStatus,
-		};
-		try {
-			await APIRequest('UPDATE_LENDING', reqData);
-		} catch (e) {
-			if (e.type === 0 && e.errors.length) {
-				setValidations(validationFields, e.errors);
-			}
-		}
-	};
-
 
 	return (
 		<>
