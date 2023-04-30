@@ -86,6 +86,7 @@ export default function Lendings() {
 			icon: <VisibilityTwoTone />,
 			toolTip: 'View',
 			action: handleUpdateRequest('VIEW'),
+			props: { disabled: false },
 		},
 		{
 			key: 'UPDATE',
