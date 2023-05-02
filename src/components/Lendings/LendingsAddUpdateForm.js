@@ -46,10 +46,10 @@ export default function LendingsAddUpdateForm({ _data, displayAPI, api, formItem
 	);
 
 	const [borrowingStatus, bindBorrowingStatus, borrowingStatusValidations] = useInput(false, 2);
+	const [settlementStatus, bindSettlementStatus] = useInput(false, 2);
 	const [transactionDate, bindTransactionDate, transactionDateValidations] = useInput('', 4, 'Please provide a valid transactionDate.!');
 
 	const [lendingId, bindLendingId] = useState(null);
-	const [updateStatus, setUpdateStatus] = useState(false);
 
 	const disabledStatus = mode === 'VIEW';
 
@@ -68,7 +68,6 @@ export default function LendingsAddUpdateForm({ _data, displayAPI, api, formItem
 	};
 
 	const setDefaultData = data => {
-		console.log(data);
 		bindLendingId(data.id);
 		bindPurpose.SetDefaultValue(data.purpose);
 		bindDetails.SetDefaultValue(data.details);
@@ -80,7 +79,9 @@ export default function LendingsAddUpdateForm({ _data, displayAPI, api, formItem
 		bindCurrencyCode.SetDefaultValue(data.currencyCode);
 		bindAmount.SetDefaultValue(data.amount);
 		bindBorrowingStatus.SetDefaultValue(data.borrowingStatus);
+		bindBorrowingStatus.SetDefaultValue(data.borrowingStatus);
 		bindTransactionDate.SetDefaultValue(formatUTCToLocal(data.onDate));
+		bindSettlementStatus.setDefaultData(data.settlementStatus);
 	};
 
 	const inputFields = [
@@ -102,7 +103,6 @@ export default function LendingsAddUpdateForm({ _data, displayAPI, api, formItem
 			const {
 				data: [__],
 			} = await APIRequest(displayAPI, { id: _data.id });
-			console.log(__);
 			setDefaultData(__);
 		} else {
 			setDefaultData(_data);
@@ -119,7 +119,7 @@ export default function LendingsAddUpdateForm({ _data, displayAPI, api, formItem
 	};
 
 	const handleUpdateToggle = () => {
-		updateToggle();
+		!disabledStatus && updateToggle();
 	};
 
 	const submitAPI = async () => {
@@ -155,7 +155,6 @@ export default function LendingsAddUpdateForm({ _data, displayAPI, api, formItem
 			}
 		}
 	};
-
 
 	return (
 		<>
@@ -294,7 +293,6 @@ export default function LendingsAddUpdateForm({ _data, displayAPI, api, formItem
 										onChange={async e => {
 											bindBorrowingStatus.onChange(e);
 											if (mode === 'UPDATE') {
-												setUpdateStatus(true);
 											}
 										}}
 									/>
@@ -304,7 +302,7 @@ export default function LendingsAddUpdateForm({ _data, displayAPI, api, formItem
 									{mode}
 								</Btn>
 								{mode === 'VIEW' && (
-									<Btn id={'handle-update-toggle'} onClick={handleUpdateToggle} disabled={!disabledStatus}>
+									<Btn id={'handle-update-toggle'} onClick={handleUpdateToggle} disabled={mode === 'VIEW' || settlementStatus}>
 										<EditTwoTone />
 									</Btn>
 								)}
