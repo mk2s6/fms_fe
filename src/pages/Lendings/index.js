@@ -162,7 +162,7 @@ export default function Lendings() {
 							<Card sx={{ minHeight: 100 }} color='secondary' variant='elevation' elevation={16}>
 								<CardContent>
 									<Typography variant='button' color='text.primary'>
-										Payment Method - Add
+										Lendings/Borrowings - Add
 									</Typography>
 								</CardContent>
 								<CardActions sx={{ justifyContent: 'center' }}>
