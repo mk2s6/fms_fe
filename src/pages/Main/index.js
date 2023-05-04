@@ -1,7 +1,6 @@
 import Header from '../Partials/Header';
-import { useEffect } from 'react';
 import { Box, Container } from '@mui/material';
-import { Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { UserContext } from '../../context/UserContext';
 import Footer from '../Partials/Footer';
@@ -18,19 +17,8 @@ function TabPanel(props) {
 }
 
 function Main({ ...props }) {
-	const { allRoutes, NoAuthAppBar } = useContext(RoutesContext);
-	const navigate = useNavigate();
-	const location = useLocation();
-	const { loginStatus, unRegisterUser } = useContext(UserContext);
-
-	useEffect(() => {
-		console.log(allRoutes);
-		if (loginStatus && location.pathname === '/signout') {
-			unRegisterUser();
-			navigate(NoAuthAppBar[0].route);
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [loginStatus, NoAuthAppBar]);
+	const { allRoutes } = useContext(RoutesContext);
+	const { loginStatus } = useContext(UserContext);
 
 	return (
 		<>

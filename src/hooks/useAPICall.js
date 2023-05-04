@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import { LoaderContext } from '../context/LoaderContext';
 import { UserContext } from '../context/UserContext';
 import axios from 'axios';
+import { decryptResponse, encryptRequest } from '../utils/security';
 
 const BASE_URL = process.env.REACT_APP_ENV === 'LOCAL' ? 'http://localhost:4200' : process.env.REACT_APP_API_URL || 'http://localhost:4200';
 
@@ -20,7 +21,7 @@ const useAPICall = (getNotification = false, loader = true) => {
 		return request({
 			url,
 			method,
-			data: body,
+			data: encryptRequest(body),
 			...(customHeaders ? { headers: customHeaders } : {}),
 		});
 	};
@@ -32,8 +33,10 @@ const useAPICall = (getNotification = false, loader = true) => {
 
 			(getNotification || notification) && enqueueSnackbar(response.data.data.description, { variant: 'success' });
 			setLoader(false);
-			return { data: response.data.data.items, ...(!token ? { token: response.headers['x-id-token'] } : {}) };
+
+			return { data: decryptResponse(response.data.data.items), ...(!token ? { token: response.headers['x-id-token'] } : {}) };
 		} catch (e) {
+			console.log(e);
 			let err = e || {};
 
 			if (e?.response?.data?.code === '20001') {

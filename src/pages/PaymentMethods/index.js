@@ -16,7 +16,6 @@ export default function PaymentMethods() {
 	const [paymentMethods, setPaymentMethods] = useState([]);
 	const [updateData, setUpdateData] = useState({});
 
-	const [reload, setReload] = useState(false);
 
 	const getPaymentMethods = async () => {
 		try {
@@ -29,10 +28,11 @@ export default function PaymentMethods() {
 		(to = '') =>
 		async reload => {
 			setClickType(to);
-			reload && setReload(reload);
+			reload && (await getPaymentMethods());
 		};
 
 	useEffect(() => {
+		alert('hi');
 		(async () => {
 			try {
 				await getPaymentMethods();
@@ -40,13 +40,6 @@ export default function PaymentMethods() {
 		})();
 	}, []);
 
-	useEffect(() => {
-		reload &&
-			(async () => {
-				await getPaymentMethods();
-				setReload(false);
-			})();
-	}, [reload]);
 
 	const toolTopActions = [
 		{
