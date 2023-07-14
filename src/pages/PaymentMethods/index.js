@@ -13,9 +13,8 @@ export default function PaymentMethods() {
 	const [clickType, setClickType] = useState('');
 
 	const { APIRequest } = useAPICall(false);
-	const [paymentMethods, setPaymentMethods] = useState([]);
-	const [updateData, setUpdateData] = useState({});
-
+	const [paymentMethods, setPaymentMethods] = useState();
+	const [updateData, setUpdateData] = useState(null);
 
 	const getPaymentMethods = async () => {
 		try {
@@ -32,14 +31,12 @@ export default function PaymentMethods() {
 		};
 
 	useEffect(() => {
-		alert('hi');
 		(async () => {
 			try {
 				await getPaymentMethods();
 			} catch (e) {}
 		})();
 	}, []);
-
 
 	const toolTopActions = [
 		{
@@ -86,46 +83,50 @@ export default function PaymentMethods() {
 
 	return (
 		<>
-			<Container maxWidth='xl' sx={{ mt: 0 }} component='main'>
-				<Grid container justifyContent='center' spacing={2} sx={{ mt: 0.3, p: 1, flexGrow: 1 }}>
-					{paymentMethods.length === 0 && (
-						<Grid item xs={12} sm={12} md={4} lg={3} xl={3} variant='button' underline='none'>
-							<Card sx={{ minHeight: 100 }} color='secondary' variant='elevation' elevation={16}>
-								<CardContent>
-									<Typography variant='button' color='text.primary'>
-										Payment Method - Add
-									</Typography>
-								</CardContent>
-								<CardActions sx={{ justifyContent: 'center' }}>
-									{toolTopActions.map(action => (
-										<Btn key={action.key} type='small' onClick={action.action}>
-											<Tooltip title={action.toolTip}>{action.icon}</Tooltip>
-										</Btn>
-									))}
-								</CardActions>
-							</Card>
+			{paymentMethods && (
+				<>
+					<Container maxWidth='xl' sx={{ mt: 0 }} component='main'>
+						<Grid container justifyContent='center' spacing={2} sx={{ mt: 0.3, p: 1, flexGrow: 1 }}>
+							{paymentMethods && paymentMethods.length === 0 && (
+								<Grid item xs={12} sm={12} md={4} lg={3} xl={3} variant='button' underline='none'>
+									<Card sx={{ minHeight: 100 }} color='secondary' variant='elevation' elevation={16}>
+										<CardContent>
+											<Typography variant='button' color='text.primary'>
+												Payment Method - Add
+											</Typography>
+										</CardContent>
+										<CardActions sx={{ justifyContent: 'center' }}>
+											{toolTopActions.map(action => (
+												<Btn key={action.key} type='small' onClick={action.action}>
+													<Tooltip title={action.toolTip}>{action.icon}</Tooltip>
+												</Btn>
+											))}
+										</CardActions>
+									</Card>
+								</Grid>
+							)}
+
+							{paymentMethods.length > 0 &&
+								paymentMethods.map(pm => {
+									return <PaymentMethodCard key={generateKeysFromObjects(pm)} actions={paymentMethodActions} data={pm} />;
+								})}
 						</Grid>
-					)}
 
-					{paymentMethods.length > 0 &&
-						paymentMethods.map(pm => {
-							return <PaymentMethodCard key={generateKeysFromObjects(pm)} actions={paymentMethodActions} data={pm} />;
-						})}
-				</Grid>
-
-				{!!clickType && (
-					<PaymentMethodAddUpdateForm
-						data={updateData}
-						api={api()}
-						label={'Payment-Method-Add-Update-Form'}
-						setDisplay={setDisplay}
-						display={!!clickType}
-						mode={clickType}
-						updateToggle={updateToggle}
-					/>
-				)}
-			</Container>
-			<SpeedDialInput actions={toolTopActions} ariaLabel='Create Payment Method' />
+						{!!clickType && (
+							<PaymentMethodAddUpdateForm
+								data={updateData}
+								api={api()}
+								label={'Payment-Method-Add-Update-Form'}
+								setDisplay={setDisplay}
+								display={!!clickType}
+								mode={clickType}
+								updateToggle={updateToggle}
+							/>
+						)}
+					</Container>
+					<SpeedDialInput actions={toolTopActions} ariaLabel='Create Payment Method' />
+				</>
+			)}
 		</>
 	);
 }

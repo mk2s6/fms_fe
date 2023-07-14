@@ -16,7 +16,7 @@ export default function LendingsAddUpdateForm({ _data, displayAPI, api, formItem
 	const { enqueueSnackbar } = useSnackbar();
 	const { setValidations } = useValidations();
 	const { APIRequest } = useAPICall(true);
-	const { transactionCategories, currencyCodes, transactionModes } = useContext(ApplicationContext);
+	const { transactionCategories, currencyCodes, transactionModes, paymentMethods } = useContext(ApplicationContext);
 
 	const [purpose, bindPurpose, purposeValidations] = useInput(
 		'',
@@ -45,6 +45,8 @@ export default function LendingsAddUpdateForm({ _data, displayAPI, api, formItem
 		validateTransactionCategories,
 	);
 
+	const [paymentMethod, bindPaymentMethod, paymentMethodValidations] = useInput('', null, 'Please provide a valid payment method.!');
+
 	const [borrowingStatus, bindBorrowingStatus, borrowingStatusValidations] = useInput(false, 2);
 	const [settlementStatus, bindSettlementStatus] = useInput(false, 2);
 	const [transactionDate, bindTransactionDate, transactionDateValidations] = useInput('', 4, 'Please provide a valid transactionDate.!');
@@ -64,6 +66,7 @@ export default function LendingsAddUpdateForm({ _data, displayAPI, api, formItem
 		mode: transactionModeValidations,
 		toPhone: toPhoneValidations,
 		toEmail: toEmailValidations,
+		paymentMethod: paymentMethodValidations,
 		toName: toNameValidations,
 	};
 
@@ -82,6 +85,7 @@ export default function LendingsAddUpdateForm({ _data, displayAPI, api, formItem
 		bindBorrowingStatus.SetDefaultValue(data.borrowingStatus);
 		bindTransactionDate.SetDefaultValue(formatUTCToLocal(data.onDate));
 		bindSettlementStatus.setDefaultData(data.settlementStatus);
+		bindPaymentMethod.setDefaultData(data.paymentMethod);
 	};
 
 	const inputFields = [
@@ -270,6 +274,34 @@ export default function LendingsAddUpdateForm({ _data, displayAPI, api, formItem
 									</Grid>
 
 									<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+										<SelectDropDown
+											id='paymentMethod'
+											label={'Payment Method'}
+											items={
+												transactionMode
+													? paymentMethods
+															.filter(
+																I =>
+																	(['CHEQUE', 'IMPS', 'RTGS', 'NEFT', 'UPI', 'WIRE-TRANSFER', 'ONLINE'].includes(transactionMode)
+																		? I.type === 'BANK ACCOUNT'
+																		: false) || I.type === transactionMode,
+															)
+															.map(I => ({
+																...I,
+																value: `${I.name} - ${'x'.repeat(2)}${I.last4Digits}`,
+															}))
+													: []
+											}
+											value={paymentMethod}
+											disabled={!transactionMode || disabledStatus}
+											fullWidth
+											{...bindPaymentMethod}
+											addNew={true}
+											addNewApi={'/payment-methods'}
+										/>
+									</Grid>
+
+									<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
 										<DateTime
 											id='transaction-date'
 											label='Transaction Date'
@@ -292,8 +324,6 @@ export default function LendingsAddUpdateForm({ _data, displayAPI, api, formItem
 										disabled={disabledStatus}
 										onChange={async e => {
 											bindBorrowingStatus.onChange(e);
-											if (mode === 'UPDATE') {
-											}
 										}}
 									/>
 								</Grid>

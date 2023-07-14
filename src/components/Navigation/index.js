@@ -1,4 +1,4 @@
-import { AppBar, Box, Tabs, Tab, Toolbar, Tooltip } from '@mui/material';
+import { AppBar, Box, Tabs, Tab, Toolbar } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { RoutesContext } from '../../context/RoutesContext';
