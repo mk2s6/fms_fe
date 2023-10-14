@@ -84,8 +84,8 @@ export default function LendingsAddUpdateForm({ _data, displayAPI, api, formItem
 		bindBorrowingStatus.SetDefaultValue(data.borrowingStatus);
 		bindBorrowingStatus.SetDefaultValue(data.borrowingStatus);
 		bindTransactionDate.SetDefaultValue(formatUTCToLocal(data.onDate));
-		bindSettlementStatus.setDefaultData(data.settlementStatus);
-		bindPaymentMethod.setDefaultData(data.paymentMethod);
+		bindSettlementStatus.SetDefaultValue(data.settlementStatus);
+		bindPaymentMethod.SetDefaultValue(data.paymentMethod);
 	};
 
 	const inputFields = [

@@ -6,7 +6,7 @@ import { UserContext } from '../context/UserContext';
 import axios from 'axios';
 import { decryptResponse, encryptRequest } from '../utils/security';
 
-const BASE_URL = process.env.REACT_APP_ENV === 'LOCAL' ? 'http://192.168.162.212:4200' : process.env.REACT_APP_API_URL || 'http://localhost:4200';
+const BASE_URL = process.env.REACT_APP_ENV === 'LOCAL' ? 'http://localhost:4200' : process.env.REACT_APP_API_URL || 'http://localhost:4200';
 
 const request = axios.create({ baseURL: BASE_URL, timeout: 3000 });
 

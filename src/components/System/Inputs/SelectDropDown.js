@@ -5,7 +5,14 @@ export default function SelectDropDown({ required, items, size, label, id, fullW
 	let navigate = useNavigate();
 
 	return (
-		<FormControl sx={{ minWidth: 120 }} type='select' fullWidth={fullWidth} required={required} {...props}>
+		<FormControl
+			sx={{ minWidth: 120 }}
+			type='select'
+			fullWidth={fullWidth}
+			required={required || items.length > 0}
+			{...props}
+			disabled={props.disabled || !items.length}
+		>
 			<InputLabel sx={{ textTransform: 'capitalize' }} id={`label-${id}`}>
 				{label}
 			</InputLabel>
@@ -15,6 +22,8 @@ export default function SelectDropDown({ required, items, size, label, id, fullW
 				id={`add-id-${id}`}
 				{...props}
 				inputProps={readOnly ? { readOnly: true } : {}}
+				required={required || items.length > 0}
+				disabled={props.disabled || !items.length}
 			>
 				{addNew && !!addNewApi && (
 					<MenuItem

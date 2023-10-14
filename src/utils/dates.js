@@ -14,4 +14,6 @@ export const localTimeZone = new Date().getTimezoneOffset();
 
 export const formatLocalToUTC = datetime => moment(datetime).utc().format();
 
+export const currentDateTime = () => moment().utc().format();
+
 export const formatUTCToLocal = datetime => moment(datetime);
