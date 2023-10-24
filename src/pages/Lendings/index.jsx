@@ -23,21 +23,27 @@ export default function Lendings() {
 		try {
 			const { data } = await APIRequest('GET_ACTIVE_LENDINGS');
 			setActiveLendings(data);
-		} catch (e) {}
+		} catch (e) {
+			console.log(e);
+		}
 	};
 
 	const deleteLending = lending => async () => {
 		try {
 			await APIRequest('DELETE_LENDING', { id: lending.id });
 			setReload(true);
-		} catch (e) {}
+		} catch (e) {
+			console.log(e);
+		}
 	};
 
 	const settleLending = lending => async () => {
 		try {
 			await APIRequest('SETTLE_LENDING', { id: lending.id });
 			setReload(true);
-		} catch (e) {}
+		} catch (e) {
+			console.log(e);
+		}
 	};
 
 	const setDisplay =

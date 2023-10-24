@@ -41,10 +41,10 @@ export default function PaymentMethodAddUpdateForm({ data, api, formItems, displ
 
 	const setDefaultData = () => {
 		bindPMId(data.id);
-		bindName.SetDefaultValue(data.name);
-		bindType.SetDefaultValue(data.type);
-		bindLast4Digits.SetDefaultValue(data.last4Digits);
-		bindActive.SetDefaultValue(data.active);
+		bindName.setdefaultvalue(data.name);
+		bindType.setdefaultvalue(data.type);
+		bindLast4Digits.setdefaultvalue(data.last4Digits);
+		bindActive.setdefaultvalue(data.active);
 	};
 
 	const inputFields = [bindName, bindType, bindLast4Digits];
@@ -113,11 +113,12 @@ export default function PaymentMethodAddUpdateForm({ data, api, formItems, displ
 	};
 
 	useEffect(() => {
-		updateStatus &&
+		if (updateStatus && mode === 'UPDATE') {
 			(async () => {
 				await toggleStatusChange();
 				setUpdateStatus(false);
 			})();
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [updateStatus, active]);
 

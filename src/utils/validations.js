@@ -31,7 +31,7 @@ export function validateTransactionCategories(categories) {
 export const checkErrors = fields => {
 	return fields
 		.map(_f => {
-			_f.Validate();
+			_f.validate();
 			return _f;
 		})
 		.map(_f => _f.error)

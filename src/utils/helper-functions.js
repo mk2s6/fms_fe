@@ -28,7 +28,4 @@ function isEmptyValue(val) {
 	return val === undefined || val === null || val === '';
 }
 
-module.exports = {
-	isEmptyJSON,
-	isEmptyValue,
-};
+export { isEmptyJSON, isEmptyValue };

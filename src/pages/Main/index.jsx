@@ -16,22 +16,26 @@ function TabPanel(props) {
 }
 
 function Main() {
-	const { allRoutes } = useContext(RoutesContext);
+	try {
+		const { allRoutes } = useContext(RoutesContext);
 
-	return (
-		<>
-			{!!allRoutes.length && (
-				<>
-					<Header />
-					<Routes>
-						{!!allRoutes.length && allRoutes.map(r => <Route component={TabPanel} key={r.id} path={r.route} index={r.id} element={r.component} />)}
-						<Route path='*' element={<Navigate to={allRoutes[0].route} />} />
-					</Routes>
-					<Footer />
-				</>
-			)}
-		</>
-	);
+		return (
+			<>
+				{!!allRoutes.length && (
+					<>
+						<Header />
+						<Routes>
+							{!!allRoutes.length && allRoutes.map(r => <Route component={TabPanel} key={r.id} path={r.route} index={r.id} element={r.component} />)}
+							<Route path='*' element={<Navigate to={allRoutes[0].route} />} />
+						</Routes>
+						<Footer />
+					</>
+				)}
+			</>
+		);
+	} catch (e) {
+		console.log(e);
+	}
 }
 
 export default Main;

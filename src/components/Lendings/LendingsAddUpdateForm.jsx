@@ -72,20 +72,20 @@ export default function LendingsAddUpdateForm({ _data, displayAPI, api, formItem
 
 	const setDefaultData = data => {
 		bindLendingId(data.id);
-		bindPurpose.SetDefaultValue(data.purpose);
-		bindDetails.SetDefaultValue(data.details);
-		bindToEmail.SetDefaultValue(data.toEmail);
-		bindToPhone.SetDefaultValue(data.toPhone);
-		bindToName.SetDefaultValue(data.toName);
-		bindTransactionCategory.SetDefaultValue(data.category);
-		bindTransactionMode.SetDefaultValue(data.mode);
-		bindCurrencyCode.SetDefaultValue(data.currencyCode);
-		bindAmount.SetDefaultValue(data.amount);
-		bindBorrowingStatus.SetDefaultValue(data.borrowingStatus);
-		bindBorrowingStatus.SetDefaultValue(data.borrowingStatus);
-		bindTransactionDate.SetDefaultValue(formatUTCToLocal(data.onDate));
-		bindSettlementStatus.SetDefaultValue(data.settlementStatus);
-		bindPaymentMethod.SetDefaultValue(data.paymentMethod);
+		bindPurpose.setdefaultvalue(data.purpose);
+		bindDetails.setdefaultvalue(data.details);
+		bindToEmail.setdefaultvalue(data.toEmail);
+		bindToPhone.setdefaultvalue(data.toPhone);
+		bindToName.setdefaultvalue(data.toName);
+		bindTransactionCategory.setdefaultvalue(data.category);
+		bindTransactionMode.setdefaultvalue(data.mode);
+		bindCurrencyCode.setdefaultvalue(data.currencyCode);
+		bindAmount.setdefaultvalue(data.amount);
+		bindBorrowingStatus.setdefaultvalue(data.borrowingStatus);
+		bindBorrowingStatus.setdefaultvalue(data.borrowingStatus);
+		bindTransactionDate.setdefaultvalue(formatUTCToLocal(data.onDate));
+		bindSettlementStatus.setdefaultvalue(data.settlementStatus);
+		bindPaymentMethod.setdefaultvalue(data.paymentMethod);
 	};
 
 	const inputFields = [

@@ -64,8 +64,8 @@ export default function TransactionsAddUpdateForm({ data, api, formItems, displa
 
 	const setDefaultData = () => {
 		bindPMId(data.id);
-		bindPurpose.SetDefaultValue(data.name);
-		bindPaymentMethod.SetDefaultValue(data.paymentMethod.id);
+		bindPurpose.setdefaultvalue(data.name);
+		bindPaymentMethod.setdefaultvalue(data.paymentMethod.id);
 	};
 
 	const inputFields = [bindPurpose, bindPaymentMethod];

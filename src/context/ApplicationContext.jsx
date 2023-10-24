@@ -24,42 +24,57 @@ export const ApplicationContextProvider = props => {
 		try {
 			const { data } = await APIRequest('GET_MODULES');
 			setModules(data);
-		} catch (e) {}
+		} catch (e) {
+			console.log(e);
+		}
 	};
 
 	const refreshPaymentMethods = async () => {
 		try {
 			const { data } = await APIRequest('GET_PAYMENT_METHODS_LIST');
 			setPaymentMethods(data);
-		} catch (e) {}
+		} catch (e) {
+			console.log(e);
+		}
 	};
 
 	const refreshTransactionModes = async () => {
 		try {
 			const { data } = await APIRequest('GET_TRANSACTION_MODES');
 			setTransactionModes(data);
-		} catch (e) {}
+		} catch (e) {
+			console.log(e);
+		}
 	};
 
 	const refreshTransactionCategories = async () => {
 		try {
 			const { data } = await APIRequest('GET_TRANSACTION_CATEGORIES');
 			setTransactionCategories(data);
-		} catch (e) {}
+		} catch (e) {
+			console.log(e);
+		}
 	};
 
 	const refreshCurrencyCodes = async () => {
 		try {
 			const { data } = await APIRequest('GET_ALL_CURRENCY_CODES');
 			setCurrencyCodes(data);
-		} catch (e) {}
+		} catch (e) {
+			console.log(e);
+		}
 	};
 
 	const refreshData = async () => {
-		loginStatus && (await refreshPaymentMethods());
-		loginStatus && (await refreshTransactionModes());
-		loginStatus && (await refreshTransactionCategories());
-		loginStatus && (await refreshCurrencyCodes());
+		try {
+			loginStatus && (await refreshPaymentMethods());
+			loginStatus && (await refreshTransactionModes());
+			loginStatus && (await refreshTransactionCategories());
+			loginStatus && (await refreshCurrencyCodes());
+		} catch (e) {
+			console.log(e);
+			c;
+		}
 	};
 
 	const refreshMeta = async () => {

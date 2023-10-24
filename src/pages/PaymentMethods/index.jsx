@@ -26,15 +26,21 @@ export default function PaymentMethods() {
 	const setDisplay =
 		(to = '') =>
 		async reload => {
-			setClickType(to);
-			reload && (await getPaymentMethods());
+			try {
+				setClickType(to);
+				reload && (await getPaymentMethods());
+			} catch (e) {
+				console.log(e);
+			}
 		};
 
 	useEffect(() => {
 		(async () => {
 			try {
 				await getPaymentMethods();
-			} catch (e) {}
+			} catch (e) {
+				console.log(e);
+			}
 		})();
 	}, []);
 

@@ -1,8 +1,7 @@
-const { Buffer } = require('buffer');
-const { isEmptyValue, isEmptyJSON } = require('./helper-functions');
+import { Buffer } from 'buffer';
+import { isEmptyValue, isEmptyJSON } from './helper-functions';
 
 const convertToBase64 = _ => Buffer.from(String(_)).toString('base64');
-
 const convertFromBase64 = _ => Buffer.from(_, 'base64').toString('ascii');
 
 function encryptJSON(key, value) {
@@ -69,4 +68,5 @@ function decryptResponse(obj) {
 	return convertFromBase64(obj);
 }
 
-module.exports = { decryptResponse, encryptRequest };
+export { decryptResponse, encryptRequest };
+// export encryptRequest;

@@ -5,7 +5,7 @@ import './index.css';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { themeOptions } from './commons/theme';
 
-import { ThemeContext } from './context/ThemeContext';
+import { ThemeContext } from './context/ThemeContext.jsx';
 
 export function Body() {
 	const { currentTheme } = useContext(ThemeContext);

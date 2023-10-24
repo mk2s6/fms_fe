@@ -9,20 +9,22 @@ import { Body } from './Body';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
-
-root.render(
-	<>
-		<React.StrictMode>
-			<ThemeContextProvider>
-				<Body
-					sx={{
-						p: 0,
-						m: 0,
-					}}
-				/>
-			</ThemeContextProvider>
-		</React.StrictMode>
-	</>,
-);
-
-reportWebVitals();
+try {
+	root.render(
+		<>
+			<React.StrictMode>
+				<ThemeContextProvider>
+					<Body
+						sx={{
+							p: 0,
+							m: 0,
+						}}
+					/>
+				</ThemeContextProvider>
+			</React.StrictMode>
+		</>,
+	);
+	reportWebVitals();
+} catch (e) {
+	console.log(e);
+}

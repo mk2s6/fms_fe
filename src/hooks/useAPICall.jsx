@@ -5,10 +5,11 @@ import { LoaderContext } from '../context/LoaderContext';
 import { UserContext } from '../context/UserContext';
 import axios from 'axios';
 import { decryptResponse, encryptRequest } from '../utils/security';
+// console.log(import.meta.env);
 
-const BASE_URL = process.env.REACT_APP_ENV === 'LOCAL' ? 'http://localhost:4200' : process.env.REACT_APP_API_URL || 'http://localhost:4200';
+// const BASE_URL = import.meta.env.VITE_APP_ENV === 'LOCAL' ? 'http://localhost:4200' : import.meta.env.VITE_APP_API_URL || 'http://localhost:4200';
 
-const request = axios.create({ baseURL: BASE_URL, timeout: 3000 });
+const request = axios.create({ timeout: 3000 });
 
 const useAPICall = (getNotification = false, loader = true) => {
 	const { enqueueSnackbar } = useSnackbar();
@@ -30,7 +31,6 @@ const useAPICall = (getNotification = false, loader = true) => {
 		loader && setLoader(true);
 		try {
 			const response = await makeAPICall(APIServices[URL](data));
-
 			(getNotification || notification) && enqueueSnackbar(response.data.data.description, { variant: 'success' });
 			setLoader(false);
 
