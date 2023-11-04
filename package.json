@@ -26,10 +26,11 @@
 		"web-vitals": "^3.0.3"
 	},
 	"scripts": {
-		"start": "vite",
-		"build": "vite build",
-		"serve": "vite preview",
-		"vite": "vite"
+		"dev": "vite --mode development",
+		"buildDev": "vite build --mode development",
+		"buildStg": "vite build --mode staging",
+		"buildProd": "vite build --mode production",
+		"preview": "vite preview"
 	},
 	"eslintConfig": {
 		"extends": [

@@ -26,6 +26,7 @@ import { ThemeContext } from '../../context/ThemeContext';
 import PaletteTwoToneIcon from '@mui/icons-material/PaletteTwoTone';
 import DarkModeTwoToneIcon from '@mui/icons-material/DarkModeTwoTone';
 import LightModeTwoToneIcon from '@mui/icons-material/LightModeTwoTone';
+import LOGO from '../../../assets/logo/2k.png';
 
 function TopBar() {
 	const { unRegisterUser, loginStatus, user } = useContext(UserContext);
@@ -60,6 +61,13 @@ function TopBar() {
 			>
 				<AppBar position='static' sx={{ height: 64, ...(loginStatus ? { boxShadow: 'none' } : {}) }}>
 					<Toolbar>
+						<Avatar
+							alt='Logo'
+							sx={{ backgroundColor: 'transparent' }}
+							imgProps={{ style: { objectFit: 'contain', backgroundColor: 'none' } }}
+							variant='rounded'
+							src={LOGO}
+						/>
 						<Typography
 							sx={{ textDecoration: 'none', fontSize: 20 }}
 							color='inherit'

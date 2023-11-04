@@ -50,6 +50,7 @@ export default function TransactionsList({ API, filters, reload, setReload, setC
 	};
 
 	const handleLimitChange = e => {
+		setCurrentPage(1);
 		setLimit(e.target.value);
 	};
 
