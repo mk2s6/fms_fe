@@ -117,7 +117,7 @@ export default function Lock() {
 																label={i + 1}
 																color='secondary'
 																variant='extended'
-																elevation={32}
+																elevation={24}
 															>
 																{i + 1}
 															</Fab>

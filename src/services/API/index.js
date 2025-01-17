@@ -79,6 +79,23 @@ export const GET_LEDGERS_LIST = ({ page_no, limit, ledger, parent_transaction, l
 });
 export const GET_LEDGERS_DETAILS = ({ id }) => ({ url: `/api/ledgers/${id}`, method: 'get' });
 
+export const ADD_LEDGER = ({ ...body }) => ({
+	url: `/api/ledgers`,
+	method: 'post',
+	body,
+});
+
+export const UPDATE_LEDGER = ({ id, ...body }) => ({
+	url: `/api/ledgers/${id}`,
+	method: 'put',
+	body,
+});
+
+export const DELETE_LEDGER = ({ id }) => ({
+	url: `/api/ledgers/${id}`,
+	method: 'delete',
+});
+
 // --------------------------------------------------------------------
 //
 // Lendings related routes
@@ -142,4 +159,14 @@ export const TOGGLE_PAYMENT_METHOD_STATUS = ({ active, id }) => ({
 	url: `/api/payment-methods/${id}/status`,
 	method: 'put',
 	body: { active },
+});
+
+// --------------------------------------------------------------------
+//
+// Dashboard related routes
+//
+// --------------------------------------------------------------------
+export const GET_TRANSACTION_SUMMARY = ({ months = 6, level = 'monthly' }) => ({
+	url: `/api/dashboard/summary/${level}?months=${months}`,
+	method: 'get',
 });

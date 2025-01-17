@@ -9,6 +9,7 @@ import useValidations from '../../hooks/useValidations';
 import { ApplicationContext } from '../../context/ApplicationContext';
 import DateTime from '../System/Inputs/DateTime';
 import { formatLocalToUTC } from '../../utils/dates';
+import moment from 'moment';
 
 export default function TransactionsAddUpdateForm({ data, api, formItems, display, mode, setDisplay, label, ...props }) {
 	const { enqueueSnackbar } = useSnackbar();
@@ -34,7 +35,7 @@ export default function TransactionsAddUpdateForm({ data, api, formItems, displa
 	const [transactionMode, bindTransactionMode, transactionModeValidations] = useInput('', null, 'Please provide a valid payment method type.!');
 
 	const [currencyCode, bindCurrencyCode, currencyCodeValidations] = useInput('INR', null, 'Please provide a valid currency code.!');
-	const [transactionDate, bindTransactionDate, transactionDateValidations] = useInput('', 4, 'Please provide a valid transactionDate.!');
+	const [transactionDate, bindTransactionDate, transactionDateValidations] = useInput(moment(), 4, 'Please provide a valid transactionDate.!');
 
 	const [transactionCategory, bindTransactionCategory, transactionCategoryValidations] = useInput(
 		[],

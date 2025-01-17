@@ -28,28 +28,36 @@ function Navigation() {
 					top: 56,
 					left: 0,
 					zIndex: 1000,
+					width: '100%',
+					alignItems: 'center',
 				}}
 			>
-				<AppBar position='static' color='secondary'>
+				<AppBar
+					position='static'
+					sx={{
+						width: '100%',
+						alignItems: 'center',
+					}}
+					PaperProps={{ variant: 'elevation', elevation: 4, alignItems: 'center' }}
+				>
 					<Toolbar
 						variant='dense'
 						sx={{
 							alignItems: 'center',
-							margin: 'auto',
-							maxWidth: '92%',
+							margin: { xs: 'none', s: 'none', m: 'auto', l: 'auto', xl: 'auto' },
+							maxWidth: { xs: '100%', m: '92%' },
 						}}
 					>
-						<Tabs
-							value={tab}
-							onChange={handleChange}
-							variant='scrollable'
-							scrollButtons={true}
-							allowScrollButtonsMobile
-							indicatorColor='primary'
-							textColor='inherit'
-						>
-							<Tab key={'_null'} value={'_null'} label={''} sx={{ width: 0, height: 0, minWidth: 0, maxWidth: 0, hidden: true, p: 0 }} disabled />
-							{navRoutes && navRoutes.map(r => <Tab label={r.label} key={r.id} value={r.id} component={Link} to={r.route} />)}
+						<Tabs value={tab} onChange={handleChange} variant='scrollable' scrollButtons={'auto'} allowScrollButtonsMobile textColor='inherit'>
+							<Tab
+								disableRipple={true}
+								key={'_null'}
+								value={'_null'}
+								label={''}
+								sx={{ width: 0, height: 0, minWidth: 0, maxWidth: 0, hidden: true, p: 0 }}
+								disabled
+							/>
+							{navRoutes && navRoutes.map(r => <Tab disableRipple={true} label={r.label} key={r.id} value={r.id} component={Link} to={r.route} />)}
 							<Tab
 								key={'_undefined'}
 								value={'_undefined'}

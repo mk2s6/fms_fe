@@ -1,4 +1,4 @@
-import { Card, CardHeader, Container, Grid } from '@mui/material';
+import { Card, CardHeader, Container, Grid2 } from '@mui/material';
 import { Suspense, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Transition from '../../components/System/Transition';
@@ -12,12 +12,12 @@ function Home() {
 			<>
 				<Suspense fallback='Loading...'>
 					<Transition>
-						<Container maxWidth={'xl'} sx={{ mt: 2 }}>
+						<Container maxWidth={'xl'}>
 							{homeRoutes && (
-								<Grid container justifyContent='center' spacing={2} sx={{ mt: 2, p: 1, flexGrow: 1 }}>
+								<Grid2 container justifyContent='center' spacing={2} sx={{ p: 1, flexGrow: 1 }} columns={{ xs: 1, sm: 1, md: 2, lg: 4, xl: 4 }}>
 									{homeRoutes.map(elem => (
-										<Grid item key={elem.id} xs={12} sm={12} md={4} lg={3} xl={3} variant='button' underline='none' component={Link} to={elem.route}>
-											<Card sx={{ minHeight: 120, p: 1, pl: 2, pt: 2 }} color='secondary' variant='elevation' elevation={20}>
+										<Grid2 key={elem.id} variant='button' size={1} component={Link} to={elem.route}>
+											<Card sx={{ minHeight: 120, p: 1, pl: 2, pt: 2 }}>
 												<CardHeader
 													sx={{ p: 0 }}
 													title={elem.label}
@@ -30,9 +30,9 @@ function Home() {
 													}}
 												/>
 											</Card>
-										</Grid>
+										</Grid2>
 									))}
-								</Grid>
+								</Grid2>
 							)}
 						</Container>
 					</Transition>

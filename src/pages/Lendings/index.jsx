@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { AddCircleTwoTone, CurrencyExchangeTwoTone, DeleteForeverTwoTone, EditTwoTone, VisibilityTwoTone } from '@mui/icons-material';
-import { ButtonGroup, Card, CardActions, CardContent, Container, Grid, Tooltip, Typography } from '@mui/material';
+import { ButtonGroup, Card, CardActions, CardContent, Container, Grid2 as Grid, Tooltip, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Btn } from '../../components/System/Inputs';
 import SpeedDialInput from '../../components/System/SpeedDialInput';
@@ -146,9 +146,9 @@ export default function Lendings() {
 
 	return (
 		<>
-			<Container maxWidth='xl' sx={{ mt: 1 }} component='main'>
-				{activeLendings.length && false && (
-					<Grid container justifyContent='center' spacing={2} sx={{ mt: 2 }}>
+			<Container maxWidth='xl' component='main'>
+				{activeLendings.length > 0 && false && (
+					<Grid container justifyContent='center' spacing={2} sx={{ mt: 2 }} columns={{ xs: 1, sm: 1, md: 2, lg: 4, xl: 4 }}>
 						<ButtonGroup>
 							{SettlementTypes.map(types => {
 								const disabled = types.key === settlementFilter;
@@ -162,10 +162,10 @@ export default function Lendings() {
 					</Grid>
 				)}
 
-				<Grid container justifyContent='center' spacing={2} sx={{ mt: 0, p: 0.5 }}>
+				<Grid container justifyContent='center' spacing={2} sx={{ mt: 0, p: 0.5 }} columns={{ xs: 1, sm: 1, md: 2, lg: 4, xl: 4 }}>
 					{activeLendings.length === 0 && (
 						<Grid item xs={12} sm={12} md={4} lg={3} xl={3} variant='button' underline='none'>
-							<Card sx={{ minHeight: 100 }} color='secondary' variant='elevation' elevation={16}>
+							<Card sx={{ minHeight: 100 }} variant='elevation' elevation={16}>
 								<CardContent>
 									<Typography variant='button' color='text.primary'>
 										Lendings/Borrowings - Add

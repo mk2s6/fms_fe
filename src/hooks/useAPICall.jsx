@@ -22,7 +22,8 @@ const useAPICall = (getNotification = false, loader = true) => {
 		return request({
 			url,
 			method,
-			data: encryptRequest(body),
+			// data: encryptRequest(body),
+			data: body,
 			...(customHeaders ? { headers: customHeaders } : {}),
 		});
 	};
@@ -34,7 +35,11 @@ const useAPICall = (getNotification = false, loader = true) => {
 			(getNotification || notification) && enqueueSnackbar(response.data.data.description, { variant: 'success' });
 			setLoader(false);
 
-			return { data: decryptResponse(response.data.data.items), ...(!token ? { token: response.headers['x-id-token'] } : {}) };
+			return {
+				data: response.data.data.items,
+				// data: decryptResponse(response.data.data.items),
+				...(!token ? { token: response.headers['x-id-token'] } : {}),
+			};
 		} catch (e) {
 			console.log(e);
 			let err = e || {};

@@ -12,6 +12,8 @@ import PaymentMethods from '../pages/PaymentMethods';
 import _404 from '../pages/404';
 import ComingSoon from '../pages/ComingSoon';
 import Lendings from '../pages/Lendings';
+import Ledgers from '../pages/Ledgers';
+import Dashboard from '../pages/Dashboard';
 
 export const MODULES = [
 	{
@@ -59,7 +61,7 @@ export const MODULES = [
 	{
 		id: 5,
 		code: 'MODLED',
-		component: <ComingSoon />,
+		component: <Ledgers />,
 		noAuth: false,
 		in_nav: true,
 		in_home: true,
@@ -68,7 +70,7 @@ export const MODULES = [
 	{
 		id: 6,
 		code: 'MODDBD',
-		component: <ComingSoon />,
+		component: <Dashboard />,
 		noAuth: false,
 		in_nav: true,
 		in_home: false,

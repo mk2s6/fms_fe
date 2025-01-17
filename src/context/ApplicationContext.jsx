@@ -14,16 +14,31 @@ export const ApplicationContextProvider = props => {
 	// eslint-disable-next-line no-unused-vars
 	const [transactionTypes, setTransactionTypes] = useState(TRANSACTION_TYPES);
 	const { APIRequest } = useAPICall(false, false);
-	const { loginStatus, UserContextFlag } = useContext(UserContext);
+	const { loginStatus, UserContextFlag, registerUser, unRegisterUser } = useContext(UserContext);
+
 	const loadFlags = () => ({
 		modulesLoaded: !!modules || (modules && modules?.length),
 		loginStatus,
 	});
 
+	const getUserProfile = async () => {
+		try {
+			const {
+				data: [user],
+			} = await APIRequest('USER_PROFILE');
+			registerUser({ user });
+		} catch (e) {
+			console.log(e);
+
+			// unRegisterUser();
+		}
+	};
+
 	const refreshModules = async () => {
 		try {
 			const { data } = await APIRequest('GET_MODULES');
 			setModules(data);
+			loginStatus && (await getUserProfile());
 		} catch (e) {
 			console.log(e);
 		}
@@ -73,7 +88,6 @@ export const ApplicationContextProvider = props => {
 			loginStatus && (await refreshCurrencyCodes());
 		} catch (e) {
 			console.log(e);
-			c;
 		}
 	};
 

@@ -56,9 +56,9 @@ export default function TransactionsList({ API, filters, reload, setReload, setC
 
 	return (
 		<>
-			<Container component={Box} maxWidth='lg' sx={{ mt: 1, p: 0.5 }} disableGutters>
+			<Container component={Box} sx={{ p: 0.5 }} disableGutters>
 				{!!data && data.length === 0 && (
-					<Box component={Paper} sx={{ width: '70%', m: 'auto' }} justifyContent='center' alignItems='center'>
+					<Box component={Paper} variant='custom-paper' sx={{ width: '70%', m: 'auto' }} justifyContent='center' alignItems='center'>
 						<Stack sx={{ width: '100%', height: '100px' }} direction={'column'} justifyContent='center' alignItems='center'>
 							<Typography variant='button' sx={{ fontSize: 16 }}>
 								No Transactions exist.
@@ -71,7 +71,7 @@ export default function TransactionsList({ API, filters, reload, setReload, setC
 						<Stack
 							sx={{ width: '100%' }}
 							direction={'column'}
-							divider={<Divider sx={{ width: '85%' }} orientation='horizontal' />}
+							divider={<Divider sx={{ width: '95%' }} orientation='horizontal' />}
 							alignItems='center'
 						>
 							{data.map(row => (

@@ -6,6 +6,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { themeOptions } from './commons/theme';
 
 import { ThemeContext } from './context/ThemeContext.jsx';
+import { CssBaseline } from '@mui/material';
 
 export function Body() {
 	const { currentTheme } = useContext(ThemeContext);
@@ -23,6 +24,7 @@ export function Body() {
 	return (
 		<>
 			<ThemeProvider theme={T}>
+				<CssBaseline enableColorScheme={true} />
 				<Suspense fallback={<Fragment>Loading...</Fragment>}>
 					<App
 						sx={{

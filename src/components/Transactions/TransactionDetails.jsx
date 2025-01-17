@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import styled from '@emotion/styled';
-import { Box, Grid, ListItemText, Stack, SwipeableDrawer, Typography } from '@mui/material';
+import { Box, Divider, Grid, ListItemText, Stack, SwipeableDrawer, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { formatDisplayDate } from '../../commons/dates';
 import useAPICall from '../../hooks/useAPICall';
@@ -48,14 +48,10 @@ export default function TransactionDetails({ id, open, toggle }) {
 					elevation={24}
 					ModalProps={{ sx: { display: 'flex', justifyContent: 'center', alignItems: 'center' } }}
 					PaperProps={{
+						variant: 'custom-paper',
 						sx: {
 							m: 'auto',
-							pt: 1,
-							pl: 2,
-							pr: 2,
-							pb: 5,
-							backgroundColor: 'background.default',
-							width: { xs: '88%', sm: '88%', md: '75%', lg: '60%', xl: '50%' },
+							width: { xs: '98%', sm: '98%', md: '75%', lg: '60%', xl: '50%' },
 							borderTopLeftRadius: 8,
 							borderTopRightRadius: 8,
 						},
@@ -86,39 +82,52 @@ export default function TransactionDetails({ id, open, toggle }) {
 						</Typography>
 					</Box>
 					<Box sx={{ minHeight: '300px', width: '80%', margin: 'auto', ml: { sm: 2, lg: 14 } }}>
-						<Grid container justifyContent='center' spacing={2} sx={{ p: 1, flexGrow: 1 }}>
-							<Grid xs={12} sm={12} md={6} lg={6} xl={6} item sx={{}}>
-								<Stack component={Grid} item sx={{}} direction={'column'} spacing={3}>
-									<ListItemText
-										primary={getCurrencyForListFormat(details.value, '', details.currencyCode)}
-										primaryTypographyProps={{ sx: { textTransform: 'uppercase' }, variant: 'h5' }}
-										secondary={`${details.type}`}
-										secondaryTypographyProps={{ sx: { fontSize: 14 } }}
-									/>
-									<ListItemText
-										primary={details.mode}
-										primaryTypographyProps={{ sx: { textTransform: 'uppercase' }, variant: 'h5' }}
-										secondary={'Payment Mode'}
-										secondaryTypographyProps={{ sx: { fontSize: 14 } }}
-									/>
-								</Stack>
+						<Grid
+							container={true}
+							sx={{ minWidth: '100%' }}
+							direction={['row']}
+							justifyContent='center'
+							spacing={2}
+							xs={12}
+							sm={12}
+							md={6}
+							lg={6}
+							xl={6}
+						>
+							<Grid item xs={12} sm={12} md={6} lg={6} xl={6} sx={{ width: '100%' }}>
+								<ListItemText
+									primary={getCurrencyForListFormat(details.value, '', details.currencyCode)}
+									primaryTypographyProps={{ sx: { textTransform: 'uppercase' }, variant: 'h5' }}
+									secondary={`${details.type}`}
+									secondaryTypographyProps={{ sx: { fontSize: 14 } }}
+								/>
 							</Grid>
-							<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-								<Stack component={Grid} item sx={{}} direction={'column'} spacing={3}>
-									<ListItemText
-										primary={details.category}
-										primaryTypographyProps={{ sx: { textTransform: 'uppercase' }, variant: 'h5' }}
-										secondary={'Category'}
-										secondaryTypographyProps={{ sx: { fontSize: 14 } }}
-									/>
-									<ListItemText
-										primary={details.description}
-										primaryTypographyProps={{ variant: 'h5' }}
-										secondary={'Details'}
-										secondaryTypographyProps={{ sx: { fontSize: 14 } }}
-									/>
-								</Stack>
+							<Grid item xs={12} sm={12} md={6} lg={6} xl={6} sx={{ width: '100%' }}>
+								<ListItemText
+									primary={details.mode}
+									primaryTypographyProps={{ sx: { textTransform: 'uppercase' }, variant: 'h5' }}
+									secondary={'Payment Mode'}
+									secondaryTypographyProps={{ sx: { fontSize: 14 } }}
+								/>
 							</Grid>
+							<Grid item xs={12} sm={12} md={6} lg={6} xl={6} sx={{ width: '100%' }}>
+								<ListItemText
+									primary={details.category}
+									primaryTypographyProps={{ sx: { textTransform: 'uppercase' }, variant: 'h5' }}
+									secondary={'Category'}
+									secondaryTypographyProps={{ sx: { fontSize: 14 } }}
+								/>
+							</Grid>
+							<Grid item xs={12} sm={12} md={6} lg={6} xl={6} sx={{ width: '100%' }}>
+								<ListItemText
+									primary={details.description}
+									primaryTypographyProps={{ variant: 'h5' }}
+									secondary={'Details'}
+									secondaryTypographyProps={{ sx: { fontSize: 14 } }}
+								/>
+							</Grid>
+							<Grid item xs={12} />
+							<Grid item xs={12} />
 						</Grid>
 					</Box>
 				</SwipeableDrawer>

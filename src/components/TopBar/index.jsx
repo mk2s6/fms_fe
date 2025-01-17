@@ -16,6 +16,7 @@ import {
 	Tooltip,
 	Typography,
 } from '@mui/material';
+import MenuTwoToneIcon from '@mui/icons-material/MenuTwoTone';
 import { Link } from 'react-router-dom';
 import { useContext, useState } from 'react';
 import { UserContext } from '../../context/UserContext';
@@ -59,7 +60,11 @@ function TopBar() {
 					position: 'sticky',
 				}}
 			>
-				<AppBar position='static' sx={{ height: 64, ...(loginStatus ? { boxShadow: 'none' } : {}) }}>
+				<AppBar
+					PaperProps={{ variant: 'elevation', color: 'default' }}
+					position='static'
+					sx={{ height: 64, ...(loginStatus ? { boxShadow: 'none' } : {}) }}
+				>
 					<Toolbar>
 						<Avatar
 							alt='Logo'
@@ -99,11 +104,11 @@ function TopBar() {
 										<Avatar
 											variant='rounded'
 											alt={user?.name
-												.split(' ')
-												.map(i => i[0])
-												.join('')
-												.slice(0, 2)}
-											sx={{ m: 0, bgColor: 'primary' }}
+												?.split(' ')
+												?.map(i => i[0])
+												?.join('')
+												?.slice(0, 2)}
+											sx={{ m: 0, backgroundColor: 'secondary' }}
 											src={user?.img}
 										/>
 									</IconButton>

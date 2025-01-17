@@ -1,3 +1,4 @@
+import { Add, PlusOne } from '@mui/icons-material';
 import { SpeedDial, SpeedDialAction, SpeedDialIcon } from '@mui/material';
 import { useState } from 'react';
 
@@ -11,11 +12,11 @@ export default function SpeedDialInput({ actions, ...props }) {
 			<SpeedDial
 				direction='up'
 				sx={{ position: 'fixed', bottom: 64, right: { xs: 24, sm: 24, md: 24, xl: 32, lg: 32 } }}
-				icon={<SpeedDialIcon />}
+				icon={<SpeedDialIcon icon={<Add color='#ff0' />} />}
 				onClose={handleToolTipClose}
 				onOpen={handleToolTipOpen}
 				open={toolTipOpen}
-				FabProps={{ color: 'secondary' }}
+				FabProps={{ variant: 'circular' }}
 				{...props}
 			>
 				{actions &&

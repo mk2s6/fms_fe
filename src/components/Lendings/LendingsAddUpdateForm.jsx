@@ -1,4 +1,4 @@
-import { Fade, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Grid, Typography } from '@mui/material';
+import { Fade, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Grid2 as Grid, Typography } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
 import useInput from '../../hooks/useInput';
 import { checkErrors, isValidEmail, validateAmount, validateString, validateTransactionCategories } from '../../utils/validations';
@@ -11,12 +11,13 @@ import { EditTwoTone } from '@mui/icons-material';
 import { ApplicationContext } from '../../context/ApplicationContext';
 import DateTime from '../System/Inputs/DateTime';
 import { formatLocalToUTC, formatUTCToLocal } from '../../utils/dates';
+import moment from 'moment';
 
 export default function LendingsAddUpdateForm({ _data, displayAPI, api, formItems, display, mode, setDisplay, label, updateToggle, ...props }) {
 	const { enqueueSnackbar } = useSnackbar();
 	const { setValidations } = useValidations();
 	const { APIRequest } = useAPICall(true);
-	const { transactionCategories, currencyCodes, transactionModes, paymentMethods } = useContext(ApplicationContext);
+	const { transactionCategories, currencyCodes, transactionModes, paymentMethods, refreshData } = useContext(ApplicationContext);
 
 	const [purpose, bindPurpose, purposeValidations] = useInput(
 		'',
@@ -49,7 +50,7 @@ export default function LendingsAddUpdateForm({ _data, displayAPI, api, formItem
 
 	const [borrowingStatus, bindBorrowingStatus, borrowingStatusValidations] = useInput(false, 2);
 	const [settlementStatus, bindSettlementStatus] = useInput(false, 2);
-	const [transactionDate, bindTransactionDate, transactionDateValidations] = useInput('', 4, 'Please provide a valid transactionDate.!');
+	const [transactionDate, bindTransactionDate, transactionDateValidations] = useInput(moment(), 4, 'Please provide a valid transactionDate.!');
 
 	const [lendingId, bindLendingId] = useState(null);
 
@@ -100,6 +101,7 @@ export default function LendingsAddUpdateForm({ _data, displayAPI, api, formItem
 		bindTransactionDate,
 		bindTransactionMode,
 		bindBorrowingStatus,
+		bindPaymentMethod,
 	];
 
 	const getDetails = async () => {
@@ -108,12 +110,14 @@ export default function LendingsAddUpdateForm({ _data, displayAPI, api, formItem
 				data: [__],
 			} = await APIRequest(displayAPI, { id: _data.id });
 			setDefaultData(__);
+			console.log(__);
 		} else {
 			setDefaultData(_data);
 		}
 	};
 
 	useEffect(() => {
+		refreshData();
 		(async () => (mode === 'UPDATE' || mode === 'VIEW') && (await getDetails()))();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
@@ -135,7 +139,6 @@ export default function LendingsAddUpdateForm({ _data, displayAPI, api, formItem
 		}
 
 		if (mode === 'VIEW') return;
-
 		const reqData = {
 			id: mode === 'UPDATE' ? lendingId : null,
 			purpose,
@@ -149,7 +152,9 @@ export default function LendingsAddUpdateForm({ _data, displayAPI, api, formItem
 			currencyCode,
 			amount,
 			isBorrowed: borrowingStatus,
+			paymentMethod,
 		};
+
 		try {
 			await APIRequest(api, reqData);
 			await handleModalClose(true)();
@@ -175,15 +180,15 @@ export default function LendingsAddUpdateForm({ _data, displayAPI, api, formItem
 								{borrowingStatus ? 'Borrowing Details' : 'Loaning Details'}
 							</DialogTitle>
 							<DialogContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', p: 1 }}>
-								<Grid container spacing={2} sx={{ pt: 1 }}>
-									<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+								<Grid container spacing={2} sx={{ pt: 1 }} columns={2}>
+									<Grid size={2}>
 										<TextBox id='purpose' label='Purpose' type='text' value={purpose} {...bindPurpose} required disabled={disabledStatus} />
 									</Grid>
-									<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+									<Grid size={2}>
 										<TextBox id='details' label='Details' type='text' value={details} {...bindDetails} required disabled={disabledStatus} />
 									</Grid>
 
-									<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+									<Grid size={1}>
 										<TextBox
 											id='name'
 											label={borrowingStatus ? 'Borrowing from' : 'Loaned to'}
@@ -195,7 +200,7 @@ export default function LendingsAddUpdateForm({ _data, displayAPI, api, formItem
 										/>
 									</Grid>
 
-									<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+									<Grid size={1}>
 										<SelectDropDown
 											id='Borrowing-category'
 											label={`${borrowingStatus ? 'Borrowing for' : 'Loaned to'} category`}
@@ -212,7 +217,7 @@ export default function LendingsAddUpdateForm({ _data, displayAPI, api, formItem
 										/>
 									</Grid>
 
-									<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+									<Grid size={1}>
 										<TextBox
 											id='toEmail'
 											label={`${borrowingStatus ? 'Borrowing from' : 'Loaned to'} Email`}
@@ -223,7 +228,7 @@ export default function LendingsAddUpdateForm({ _data, displayAPI, api, formItem
 											disabled={disabledStatus}
 										/>
 									</Grid>
-									<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+									<Grid size={1}>
 										<TextBox
 											id='toPhone'
 											label={`${borrowingStatus ? 'Borrowing from' : 'Loaned to'} Phone`}
@@ -235,7 +240,7 @@ export default function LendingsAddUpdateForm({ _data, displayAPI, api, formItem
 										/>
 									</Grid>
 
-									<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+									<Grid size={1}>
 										<SelectDropDown
 											id='transaction-currency-code'
 											label={'Currency Code'}
@@ -252,11 +257,11 @@ export default function LendingsAddUpdateForm({ _data, displayAPI, api, formItem
 										/>
 									</Grid>
 
-									<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+									<Grid size={1}>
 										<TextBox id='amount' label='Amount' type='text' value={amount} {...bindAmount} required disabled={disabledStatus} />
 									</Grid>
 
-									<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+									<Grid size={1}>
 										<SelectDropDown
 											id='transaction-mode'
 											label={'Transaction Mode'}
@@ -273,7 +278,7 @@ export default function LendingsAddUpdateForm({ _data, displayAPI, api, formItem
 										/>
 									</Grid>
 
-									<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+									<Grid size={1}>
 										<SelectDropDown
 											id='paymentMethod'
 											label={'Payment Method'}
@@ -301,7 +306,7 @@ export default function LendingsAddUpdateForm({ _data, displayAPI, api, formItem
 										/>
 									</Grid>
 
-									<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+									<Grid size={1}>
 										<DateTime
 											id='transaction-date'
 											label='Transaction Date'
@@ -314,7 +319,7 @@ export default function LendingsAddUpdateForm({ _data, displayAPI, api, formItem
 								</Grid>
 							</DialogContent>
 							<DialogActions>
-								<Grid item xs={12} sm={12} md={12} lg={12} xl={12} alignItems='center' justifyContent='center'>
+								<Grid size={1} alignItems='center' justifyContent='center'>
 									<SwitchInput
 										id='setActive'
 										sx={{ mr: 2 }}

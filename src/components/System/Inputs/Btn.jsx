@@ -1,9 +1,8 @@
 import { Button } from '@mui/material';
 
-export default function Btn({ component, label, icon, ...props }) {
+export default function Btn({ component, label, icon, disabled, ...props }) {
 	return (
-		<Button variant='contained' {...props} color='secondary'>
-			{icon ? icon : ''}
+		<Button variant='contained' {...props} disabled={!!disabled} {...(icon ? { startIcon: <icon {...(disabled ? { color: 'red' } : {})} /> } : {})}>
 			{props.children ? props.children : label}
 		</Button>
 	);

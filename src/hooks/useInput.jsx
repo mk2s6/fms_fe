@@ -38,6 +38,7 @@ const useInput = (initialValue, type, validationMessage = '', validator = _v => 
 	};
 
 	const setValidationErrors = e => {
+		console.log(e);
 		setError(true);
 		setHelperText(e.message);
 	};

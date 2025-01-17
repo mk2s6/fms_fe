@@ -24,9 +24,12 @@ function Login() {
 
   const submitLogin = async () => {
     try {
-      const { data, token } = await APIRequest('USER_LOGIN', { username, password, rememberMe });
+      const {
+				data: [user],
+				token,
+			} = await APIRequest('USER_LOGIN', { username, password, rememberMe });
 
-      registerUser(data[0], token, rememberMe);
+			registerUser({ user, token });
     } catch (e) {
       if (e.type === 0 && e.errors.length) {
         setValidations(validationFields, e.errors);

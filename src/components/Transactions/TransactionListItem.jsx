@@ -1,4 +1,4 @@
-import { Avatar, Grid, ListItemAvatar, ListItemButton, ListItemText, styled, Typography } from '@mui/material';
+import { Avatar, Grid2 as Grid, ListItemAvatar, ListItemButton, ListItemText, styled, Typography } from '@mui/material';
 import { formatDisplayDate } from '../../commons/dates';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import { useState } from 'react';
@@ -37,35 +37,21 @@ export default function TransactionListItem({ data }) {
 
 			<ListItemButton
 				sx={{
-					width: { xs: '100%', sm: '100%', md: '85%', xl: '85%', lg: '85%' },
+					width: { xs: '100%', sm: '100%', md: '95%', xl: '95%', lg: '95%' },
 				}}
 				onClick={() => {
 					toggleDetails();
 				}}
 			>
-				<ListItemAvatar alignItems='flex-start'>
-					<Avatar>
-						<ReceiptLongIcon />
-					</Avatar>
-				</ListItemAvatar>
-				<Grid container spacing={1}>
-					<Grid item xs={12} sm={12} md={5}>
-						<ListItemText
-							primary={data.purpose}
-							primaryTypographyProps={{ variant: 'button', sx: { fontSize: '16px' } }}
-							secondary={formatDisplayDate(data.date)}
-							secondaryTypographyProps={{ variant: 'caption' }}
-						/>
+				<Grid container spacing={1} sx={{ flexGrow: 1 }} justifyContent='space-between' columns={12}>
+					<Grid size={{ xs: 12, sm: 12, md: 6, lg: 4 }}>
+						<ListItemText primary={data.purpose} secondary={formatDisplayDate(data.date)} />
 					</Grid>
 
 					<Grid
-						item
-						xs={12}
-						sm={4}
-						md={3}
+						size={{ xs: 4, sm: 4, md: 2, lg: 3 }}
 						sx={{
 							display: 'flex',
-							justifyContent: 'center',
 							alignItems: 'center',
 							pr: 4,
 						}}
@@ -73,11 +59,11 @@ export default function TransactionListItem({ data }) {
 						<Typography variant='body2'>{data.mode}</Typography>
 					</Grid>
 
-					<Grid item xs={6} sm={4} md={2} sx={{ display: 'flex', justifyContent: 'start', alignItems: 'center' }}>
+					<Grid size={{ xs: 4, sm: 4, md: 2, lg: 3 }} sx={{ display: 'flex', justifyContent: 'start', alignItems: 'center' }}>
 						<Typography variant='body2'>{data.category}</Typography>
 					</Grid>
 
-					<Grid item xs={6} sm={4} md={2} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', p: 0, m: 0 }}>
+					<Grid size={{ xs: 4, sm: 4, md: 2, lg: 2 }} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', p: 0, m: 0 }}>
 						<Typography>
 							<Amount variant='button' type={data.type}>
 								{getCurrencyForListFormat(data.value, data.type, data.currencyCode)}

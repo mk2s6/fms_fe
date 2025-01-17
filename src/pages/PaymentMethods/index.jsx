@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { AddCircleTwoTone, EditTwoTone, VisibilityTwoTone } from '@mui/icons-material';
-import { Card, CardActions, CardContent, Container, Grid, Tooltip, Typography } from '@mui/material';
+import { AddCircleTwoTone, Delete, EditTwoTone, VisibilityTwoTone } from '@mui/icons-material';
+import { Card, CardActions, CardContent, Container, Grid2 as Grid, Tooltip, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import PaymentMethodAddUpdateForm from '../../components/PaymentMethods/PaymentMethodAddUpdateForm';
 import PaymentMethodCard from '../../components/PaymentMethods/PaymentMethodCard';
@@ -60,18 +60,32 @@ export default function PaymentMethods() {
 		setUpdateData(data);
 	};
 
+	const deletePaymentMethod = data => async () => {
+		await APIRequest('DELETE_PAYMENT_METHOD', data);
+		await getPaymentMethods();
+	};
+
 	const paymentMethodActions = [
 		{
 			key: 'VIEW',
 			icon: <VisibilityTwoTone />,
 			toolTip: 'View',
+			btn: false,
 			action: handleUpdateRequest('VIEW'),
 		},
 		{
 			key: 'UPDATE',
 			icon: <EditTwoTone />,
 			toolTip: 'Update',
+			btn: true,
 			action: handleUpdateRequest('UPDATE'),
+		},
+		{
+			key: 'DELETE',
+			icon: <Delete />,
+			toolTip: 'Delete',
+			btn: true,
+			action: deletePaymentMethod,
 		},
 	];
 
@@ -92,10 +106,10 @@ export default function PaymentMethods() {
 			{paymentMethods && (
 				<>
 					<Container maxWidth='xl' sx={{ mt: 0 }} component='main'>
-						<Grid container justifyContent='center' spacing={2} sx={{ mt: 0.3, p: 1, flexGrow: 1 }}>
+						<Grid container justifyContent='center' spacing={2} sx={{ p: 1, flexGrow: 1 }} columns={{ xs: 1, sm: 1, md: 2, lg: 4, xl: 4 }}>
 							{paymentMethods && paymentMethods.length === 0 && (
-								<Grid item xs={12} sm={12} md={4} lg={3} xl={3} variant='button' underline='none'>
-									<Card sx={{ minHeight: 100 }} color='secondary' variant='elevation' elevation={16}>
+								<Grid size={1} variant='button' underline='none'>
+									<Card sx={{ minHeight: 100 }} variant='elevation' elevation={16}>
 										<CardContent>
 											<Typography variant='button' color='text.primary'>
 												Payment Method - Add

@@ -8,6 +8,8 @@ const UserContextProvider = props => {
 	const [token, setToken] = useState(undefined);
 	const [loginStatus, setLoginStatus] = useState(false);
 	const [UserContextFlag, setUserContextFlag] = useState(false);
+	const [user, setUser] = useState({});
+
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -30,9 +32,10 @@ const UserContextProvider = props => {
 		else setLoginStatus(false);
 	}, [token]);
 
-	const registerUser = (data, _token) => {
-		localStorage.setItem('token', _token);
-		setToken(_token);
+	const registerUser = ({ user, token = null }) => {
+		token && localStorage.setItem('token', token);
+		token && setToken(token);
+		user && setUser(user);
 		navigate('/home');
 	};
 
@@ -42,7 +45,9 @@ const UserContextProvider = props => {
 		navigate('/signin');
 	};
 
-	return <UserContext.Provider value={{ registerUser, UserContextFlag, token, loginStatus, unRegisterUser }}>{props.children}</UserContext.Provider>;
+	return (
+		<UserContext.Provider value={{ registerUser, UserContextFlag, token, loginStatus, user, unRegisterUser }}>{props.children}</UserContext.Provider>
+	);
 };
 
 export { UserContext, UserContextProvider };

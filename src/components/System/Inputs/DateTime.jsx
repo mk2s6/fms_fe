@@ -1,9 +1,10 @@
-import { FormControl } from '@mui/material';
+import { FormControl, FormHelperText, InputLabel } from '@mui/material';
+import moment from 'moment';
 import { MobileDateTimePicker } from '@mui/x-date-pickers';
 
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-export default function DateTime({ component, ...props }) {
+export default function DateTime({ component, value, ...props }) {
 	return (
 		<LocalizationProvider dateAdapter={AdapterMoment}>
 			<FormControl required fullWidth {...props}>
@@ -12,9 +13,11 @@ export default function DateTime({ component, ...props }) {
 					variant='contained'
 					fullWidth
 					format='LLL'
+					value={value ? value : moment()}
 					{...props}
-					// value={props.value ? props.value : currentDateTime()}
+					aria-describedby='my-helper-text'
 				/>
+				{props.error ? <FormHelperText id='my-helper-text'>{props.HelperText}</FormHelperText> : <></>}
 			</FormControl>
 		</LocalizationProvider>
 	);
