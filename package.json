@@ -30,7 +30,7 @@
 		"dev": "vite --mode development --host",
 		"buildDev": "vite build --mode development",
 		"buildStg": "vite build --mode staging",
-		"buildProd": "vite build --mode production",
+		"build": "vite build --mode production",
 		"preview": "vite preview"
 	},
 	"eslintConfig": {
