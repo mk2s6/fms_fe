@@ -63,7 +63,7 @@ function TopBar() {
 				<AppBar
 					PaperProps={{ variant: 'elevation', color: 'default' }}
 					position='static'
-					sx={{ height: 64, ...(loginStatus ? { boxShadow: 'none' } : {}) }}
+					sx={{ height: 64, border: 'none', ...(loginStatus ? { boxShadow: 'none' } : {}) }}
 				>
 					<Toolbar>
 						<Avatar
@@ -80,7 +80,7 @@ function TopBar() {
 							to={_default[0]?.route || '#'}
 							variant={'button'}
 						>
-							PFTA
+							CASHLYTX
 						</Typography>
 						<Typography noWrap sx={{ flexGrow: 1 }} color='inherit'></Typography>
 						{NoAuthAppBar &&

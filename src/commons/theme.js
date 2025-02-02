@@ -196,6 +196,82 @@ export const themeOptions = [
 	// },
 	{
 		mode: 'Light',
+		name: 'Cream',
+		id: 'THEME-CREAM',
+		palette: {
+			mode: 'light',
+			primary: {
+				main: '#64558f',
+				light: '#E8DDFF',
+				dark: '#201047',
+				contrastText: '#f8f1f6',
+			},
+			secondary: {
+				main: '#515B92',
+				contrastText: '#f8f1f6',
+				dark: '#0A164B',
+				light: '#64558f',
+			},
+			background: {
+				paper: '#f2ecee',
+				default: '#f8f1f6',
+			},
+			text: {
+				primary: '#201047',
+				secondary: '#1D192B',
+				hint: '#4C3E76',
+				disabled: '#5d5d74',
+			},
+			error: {
+				main: '#BA1A1A',
+			},
+			info: {
+				main: '#7D5261',
+				light: '#FFD9E3',
+				dark: '#31101E',
+			},
+			divider: '#4c3e76',
+			success: {
+				main: '#41682C',
+			},
+		},
+		shape: {
+			borderRadius: 16,
+		},
+		unstable_sxConfig: {},
+		components: {
+			MuiAppBar: {
+				defaultProps: { PaperProps: { elevation: 0 } },
+				styleOverrides: {
+					root: {
+						backgroundColor: '#f8f1f6',
+						color: '#64558f',
+						border: 'none',
+						elevation: 0,
+						boxShadow: 'none',
+					},
+				},
+			},
+			MuiPaper: {
+				defaultProps: {
+					variant: 'outlined',
+				},
+			},
+			MuiSpeedDialAction: {
+				defaultProps: {
+					sx: { background: '#dcdaf5' },
+					FabProps: { color: 'primary', style: { background: 'red!important' } },
+				},
+				styleOverrides: {
+					root: {
+						// background: 'red!important',
+					},
+				},
+			},
+		},
+	},
+	{
+		mode: 'Light',
 		name: 'Purple',
 		id: 'THEME-PURPLE',
 		palette: {
@@ -210,10 +286,11 @@ export const themeOptions = [
 				main: '#515B92',
 				contrastText: '#ffffff',
 				dark: '#0A164B',
+				light: '#64558f',
 			},
 			background: {
 				paper: '#E8DDFF',
-				default: '#f5f5f5',
+				default: '#f8f1f6',
 			},
 			text: {
 				primary: '#201047',
@@ -228,7 +305,7 @@ export const themeOptions = [
 				light: '#FFD9E3',
 				dark: '#31101E',
 			},
-			divider: '#4c3e76',
+			divider: '#515B92',
 			success: {
 				main: '#41682C',
 			},

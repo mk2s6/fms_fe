@@ -5,7 +5,7 @@ import { LoaderContext } from '../context/LoaderContext';
 import { UserContext } from '../context/UserContext';
 import axios from 'axios';
 import { decryptResponse, encryptRequest } from '../utils/security';
-// console.log(import.meta.env);
+console.log(import.meta.env);
 
 // const BASE_URL = import.meta.env.VITE_APP_ENV === 'LOCAL' ? 'http://localhost:4200' : import.meta.env.VITE_APP_API_URL || 'http://localhost:4200';
 

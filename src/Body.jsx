@@ -16,7 +16,8 @@ export function Body() {
 	useEffect(() => {
 		currentTheme && setT(createTheme(currentTheme));
 		if (currentTheme) {
-			window.document.body.style.backgroundColor = currentTheme.palette.background.default;
+			console.log(`${currentTheme.palette.background.default}!important`);
+			window.document.body.style.backgroundColor = `${currentTheme.palette.background.default}!important`;
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [currentTheme]);

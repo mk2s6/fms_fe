@@ -2,12 +2,14 @@ import { AppBar, Box, Tabs, Tab, Toolbar } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { RoutesContext } from '../../context/RoutesContext';
+import { ApplicationContext } from '../../context/ApplicationContext';
 
 function Navigation() {
 	const [tab, setTab] = useState('_null');
 	let location = useLocation();
 
 	const { navRoutes, NoAuthAppBar } = useContext(RoutesContext);
+	const { isMobile } = useContext(ApplicationContext);
 
 	useEffect(() => {
 		const TAB = navRoutes.filter(e => location.pathname.includes(e.route))[0]?.id;
@@ -15,6 +17,10 @@ function Navigation() {
 		else setTab(TAB || '_undefined');
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [navRoutes, location.pathname]);
+
+	useEffect(() => {
+		console.log({ isMobile });
+	}, [isMobile]);
 
 	const handleChange = (_event, newTabIndex) => {
 		setTab(newTabIndex);
@@ -35,6 +41,7 @@ function Navigation() {
 				<AppBar
 					position='static'
 					sx={{
+						border: 'none',
 						width: '100%',
 						alignItems: 'center',
 					}}

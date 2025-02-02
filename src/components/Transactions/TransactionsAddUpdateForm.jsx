@@ -1,4 +1,4 @@
-import { Fade, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Grid, Divider } from '@mui/material';
+import { Fade, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Grid2 as Grid, Divider } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
 import useInput from '../../hooks/useInput';
 import { checkErrors, validateAmount, validateString, validateTransactionCategories } from '../../utils/validations';
@@ -140,8 +140,9 @@ export default function TransactionsAddUpdateForm({ data, api, formItems, displa
 									sx={{
 										p: 0.5,
 									}}
+									columns={12}
 								>
-									<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+									<Grid item size={{ xs: 12, sm: 12, md: 12, lg: 12, xl: 12 }}>
 										<TextBox
 											id='purpose'
 											label='Transaction Purpose'
@@ -153,7 +154,7 @@ export default function TransactionsAddUpdateForm({ data, api, formItems, displa
 										/>
 									</Grid>
 
-									<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+									<Grid item size={{ xs: 12, sm: 12, md: 12, lg: 12, xl: 12 }}>
 										<TextBox
 											id='description'
 											label='Transaction Description'
@@ -166,7 +167,7 @@ export default function TransactionsAddUpdateForm({ data, api, formItems, displa
 										/>
 									</Grid>
 
-									<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+									<Grid item size={{ xs: 12, sm: 12, md: 6, lg: 6, xl: 6 }}>
 										<SelectDropDown
 											id='transaction-mode'
 											label={'Transaction Mode'}
@@ -183,7 +184,7 @@ export default function TransactionsAddUpdateForm({ data, api, formItems, displa
 										/>
 									</Grid>
 
-									<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+									<Grid item size={{ xs: 12, sm: 12, md: 6, lg: 6, xl: 6 }}>
 										<SelectDropDown
 											id='paymentMethod'
 											label={'Payment Method'}
@@ -211,7 +212,7 @@ export default function TransactionsAddUpdateForm({ data, api, formItems, displa
 										/>
 									</Grid>
 
-									<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+									<Grid item size={{ xs: 12, sm: 12, md: 6, lg: 6, xl: 6 }}>
 										<SelectDropDown
 											id='transaction-category'
 											label={'Transaction category'}
@@ -228,7 +229,7 @@ export default function TransactionsAddUpdateForm({ data, api, formItems, displa
 										/>
 									</Grid>
 
-									<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+									<Grid item size={{ xs: 12, sm: 12, md: 6, lg: 6, xl: 6 }}>
 										<SelectDropDown
 											id='transaction-type'
 											label={'Transaction Type'}
@@ -245,7 +246,7 @@ export default function TransactionsAddUpdateForm({ data, api, formItems, displa
 										/>
 									</Grid>
 
-									<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+									<Grid item size={{ xs: 12, sm: 12, md: 6, lg: 6, xl: 6 }}>
 										<SelectDropDown
 											id='transaction-currency-code'
 											label={'Currency Code'}
@@ -255,18 +256,20 @@ export default function TransactionsAddUpdateForm({ data, api, formItems, displa
 											}))}
 											value={currencyCode}
 											required
-											disabled={disabledStatus}
+											// disabled={disabledStatus}
 											readOnly={disabledStatus}
 											fullWidth
 											{...bindCurrencyCode}
+											hidden={true}
+											disabled={true}
 										/>
 									</Grid>
 
-									<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+									<Grid item size={{ xs: 12, sm: 12, md: 6, lg: 6, xl: 6 }}>
 										<TextBox id='amount' label='Amount' type='text' value={amount} {...bindAmount} required disabled={disabledStatus} />
 									</Grid>
 
-									<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+									<Grid item size={{ xs: 12, sm: 12, md: 6, lg: 6, xl: 6 }}>
 										<DateTime
 											id='transaction-date'
 											label='Transaction Date'
@@ -277,7 +280,7 @@ export default function TransactionsAddUpdateForm({ data, api, formItems, displa
 										/>
 									</Grid>
 
-									<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+									<Grid item size={{ xs: 12, sm: 12, md: 6, lg: 6, xl: 6 }}>
 										<TextBox id='ref-no' label='Transaction Reference' type='text' value={refNo} {...bindRefNo} disabled={disabledStatus} />
 									</Grid>
 

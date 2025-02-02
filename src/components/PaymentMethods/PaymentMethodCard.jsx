@@ -30,7 +30,7 @@ export default function PaymentMethodCard({ data, actions, ...props }) {
 	}
 	return (
 		<Grid size={1} key={paymentMethod.id} variant='button' underline='none'>
-			<CustomCard sx={{ minHeight: 80, p: 1, pl: 2, pt: 2 }} variant='outlined'>
+			<CustomCard sx={{ minHeight: 80, p: 1, pl: 2, pt: 2 }}>
 				<CardContent sx={{ p: 0, width: '100%' }} onClick={display()}>
 					<CardHeader
 						sx={{ p: 0 }}

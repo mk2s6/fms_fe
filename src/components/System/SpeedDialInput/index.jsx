@@ -11,18 +11,19 @@ export default function SpeedDialInput({ actions, ...props }) {
 		<>
 			<SpeedDial
 				direction='up'
-				sx={{ position: 'fixed', bottom: 64, right: { xs: 24, sm: 24, md: 24, xl: 32, lg: 32 } }}
-				icon={<SpeedDialIcon icon={<Add color='#ff0' />} />}
+				sx={{ color: 'secondary', position: 'fixed', bottom: 64, right: { xs: 24, sm: 24, md: 24, xl: 32, lg: 32 } }}
+				icon={<SpeedDialIcon icon={<Add />} />}
 				onClose={handleToolTipClose}
 				onOpen={handleToolTipOpen}
 				open={toolTipOpen}
-				FabProps={{ variant: 'circular' }}
+				FabProps={{ variant: 'circular', color: 'secondary' }}
 				{...props}
 			>
 				{actions &&
 					actions.map(action => (
 						<SpeedDialAction
 							icon={action.icon}
+							color='secondary '
 							key={action.key}
 							tooltipTitle={action.toolTip}
 							onClick={() => {

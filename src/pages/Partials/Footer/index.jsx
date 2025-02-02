@@ -4,7 +4,7 @@ function Footer() {
 	return (
 		<>
 			<Container sx={{ height: '64px' }} />
-			<AppBar position='fixed' color='primary' sx={{ top: 'auto', bottom: 0, height: '48px' }}>
+			<AppBar position='fixed' color='primary' sx={{ top: 'auto', bottom: 0, border: 'none', height: '48px' }}>
 				{/* <Paper variant='footer' square sx={{ position: 'fixed', flexGrow: 1, top: 'auto', bottom: 0, left: 0, right: 0, height: '50px' }}> */}
 				<Stack
 					divider={<Divider orientation='vertical' flexItem />}

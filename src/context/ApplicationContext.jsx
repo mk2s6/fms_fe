@@ -2,6 +2,7 @@ import { useState, createContext, useEffect, useContext } from 'react';
 import useAPICall from '../hooks/useAPICall';
 import { TRANSACTION_TYPES } from '../utils/validations';
 import { UserContext } from './UserContext';
+import useDeviceType from '../hooks/useDeviceType';
 
 export const ApplicationContext = createContext();
 
@@ -11,6 +12,7 @@ export const ApplicationContextProvider = props => {
 	const [transactionModes, setTransactionModes] = useState([]);
 	const [transactionCategories, setTransactionCategories] = useState([]);
 	const [currencyCodes, setCurrencyCodes] = useState([]);
+	const isMobile = useDeviceType();
 	// eslint-disable-next-line no-unused-vars
 	const [transactionTypes, setTransactionTypes] = useState(TRANSACTION_TYPES);
 	const { APIRequest } = useAPICall(false, false);
@@ -116,6 +118,7 @@ export const ApplicationContextProvider = props => {
 				transactionModes,
 				currencyCodes,
 				transactionTypes,
+				isMobile,
 			}}
 		>
 			{props.children}
